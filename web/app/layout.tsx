@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import localFont from "@next/font/local";
 
-const inter = Inter({ subsets: ["latin"] });
+const interphases = localFont({
+  src: '../public/fonts/TT-Interphases-Pro-Trial-Variable.ttf',
+  variable: '--font-interphases'
+})
 
 export const metadata: Metadata = {
   title: "DrConvert",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${interphases.variable} font-sans bg-black0`}>{children}</body>
     </html>
   );
 }
