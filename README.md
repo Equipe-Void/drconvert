@@ -1,8 +1,8 @@
-# Sistema de conversão de dados: DrConvert
+# Sistema de conversão e análise de dados: DrConvert
 
 <img src ="https://img.shields.io/static/v1?label=status&message=%20in progress&color=red&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=sprint%20atual&message=%20primeira%20sprint&color=yellow&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=cliente&message=%20Dom%20Rock%20&color=blue&style=%3CSTYLE%3E&logo=%3CLOGO%3E">
 
-### Projeto Integrador do 3º Semestre de Banco de Dados da Fatec de São José dos Campos
+### Projeto Integrador do 3º Semestre de Banco de Dados
 
 <br>
 
