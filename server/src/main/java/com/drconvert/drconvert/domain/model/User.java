@@ -32,4 +32,10 @@ public class User {
   @Column(name = "permissions", columnDefinition="varchar(100) default 'CREATE_PROJECT,READ'")
   private Permission[] permissions;
 
+  @Column(name = "email", unique = true, nullable = false)
+  private String email;
+
+  @Column(name = "password", unique = true, nullable = false)
+  private String password;
+
 }
