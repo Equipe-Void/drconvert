@@ -6,29 +6,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Credentials {
-
+public class Field {
   @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", updatable = false, unique = true, nullable = false)
   private Long id;
 
-  @OneToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-  @Column(name = "email", unique = true, nullable = false)
-  private String email;
+  @Column(name = "type", nullable = false)
+  private String type;
 
-  @Column(name = "password", unique = true, nullable = false)
-  private String password;
+  @ManyToOne
+  @JoinColumn(name = "project_id", nullable = false)
+  private Project project;
 
 }

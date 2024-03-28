@@ -13,8 +13,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Credentials {
-
+public class Project {
   @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +24,6 @@ public class Credentials {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @Column(name = "email", unique = true, nullable = false)
-  private String email;
-
-  @Column(name = "password", unique = true, nullable = false)
-  private String password;
-
+  @Column(name = "name", unique = true, nullable = false)
+  private String name;
 }

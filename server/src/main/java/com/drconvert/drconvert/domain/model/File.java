@@ -6,29 +6,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Credentials {
-
+public class File {
   @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", updatable = false, unique = true, nullable = false)
   private Long id;
 
-  @OneToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @ManyToOne
+  @JoinColumn(name = "project_id", nullable = false)
+  private Project project;
 
-  @Column(name = "email", unique = true, nullable = false)
-  private String email;
-
-  @Column(name = "password", unique = true, nullable = false)
-  private String password;
-
+  @Column(name = "file_path", nullable = false)
+  private String filePath;
 }
