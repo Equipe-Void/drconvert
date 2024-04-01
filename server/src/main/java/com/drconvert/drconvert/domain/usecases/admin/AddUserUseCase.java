@@ -4,6 +4,6 @@ import com.drconvert.drconvert.domain.model.User;
 
 public interface AddUserUseCase {
 
-  public User addUser(User user);
+  public User add(User user);
 
 }
