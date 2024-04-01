@@ -9,21 +9,34 @@ export default function Sidebar() {
 	const pathname = usePathname();
 
 	return (
-		<div className="w-[12.25rem] h-full flex flex-col outline outline-1 outline-black1 pr-2 pt-6">
-			{userRoutes.map(route => {
-				return (
-					<Link
-						href={route.path}
-						className={`${(pathname === route.path && "bg-black1 text-white") || "text-white/60"} cursor-pointer
-						hover:bg-black1/70 duration-200 flex items-center gap-2 py-4 rounded-r-full px-4 font-semibold text-sm`}>
-						<route.icon
-							className={`h-[1.125rem] w-[1.125rem] ${(pathname === route.path && "text-white") || "text-white/60"}`}
-							weight="fill"
-						/>
-						{route.name}
-					</Link>
-				);
-			})}
+		<div className="w-[12.25rem] h-full flex flex-col justify-between outline outline-1 outline-black1 pr-2 py-6">
+			<div>
+				{userRoutes.map(route => {
+					return (
+						<Link
+							href={route.path}
+							className={`${(pathname === route.path && "bg-black1 text-white") || "text-white/60"} cursor-pointer
+							hover:bg-black1/70 duration-200 flex items-center gap-2 py-4 rounded-r-full px-4 font-semibold text-sm`}>
+							<route.icon
+								className={`h-[1.125rem] w-[1.125rem] ${(pathname === route.path && "text-white") || "text-white/60"}`}
+								weight="fill"
+							/>
+							{route.name}
+						</Link>
+					);
+				})}
+			</div>
+			<div className="flex gap-2 items-center px-4">
+				<div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-red text-sm bg-black1">
+					JV
+				</div>
+				<div className="gap-1">
+					<p className="font-semibold text-gray1 text-xs">João Vitor</p>
+					<p className="font-medium text-gray2 text-[0.625rem]">
+						jvsilvam@outlook.com
+					</p>
+				</div>
+			</div>
 		</div>
 	);
 }
