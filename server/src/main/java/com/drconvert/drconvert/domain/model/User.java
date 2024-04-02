@@ -23,6 +23,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -47,6 +49,7 @@ public class User implements UserDetails {
   @Column(name = "email", unique = true, nullable = false)
   private String email;
 
+  @JsonIgnore
   @Column(name = "password", nullable = false)
   private String password;
 

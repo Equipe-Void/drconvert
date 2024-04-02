@@ -34,11 +34,11 @@ public class AddUserController {
   private FindUserByEmailUseCase findUserByEmail;
 
   @PostMapping("/users")
-  public ResponseEntity<User> addUser(@RequestBody @Validated AddUserRequestDTO data) {
+  public ResponseEntity<?> addUser(@RequestBody @Validated AddUserRequestDTO data) {
     try {
       Optional<User> userExists = this.findUserByEmail.find(data.email());
 
-      if(userExists != null) {
+      if(userExists.isPresent()) {
         throw new UserAlreadyExistsException();
       }
 
@@ -50,8 +50,8 @@ public class AddUserController {
       User createdUser = this.addUser.add(user);
 
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-    } catch (RuntimeException exception) {
-      return ResponseEntity.badRequest().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
   
