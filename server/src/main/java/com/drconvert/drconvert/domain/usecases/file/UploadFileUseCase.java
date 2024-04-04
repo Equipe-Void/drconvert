@@ -4,6 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UploadFileUseCase {
 
-  public void upload(MultipartFile file) throws Exception;
+  public String upload(MultipartFile file) throws Exception;
 
 }
