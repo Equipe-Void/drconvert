@@ -1,4 +1,5 @@
 INSERT INTO users (email, name, password) VALUES ("email@email.com", "test", "$2a$12$cwzWOOaj61uf4XObiOk8heuaPYlKlgVFsTA5VnkWSfiZx.E3V/OSW");
+INSERT INTO project (user_id, name) VALUES (1, "primeiro");
 
 INSERT INTO roles (role) VALUES ("CREATE_PROJECT");
 INSERT INTO roles (role) VALUES ("READ");
