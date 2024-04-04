@@ -12,12 +12,12 @@ import com.drconvert.drconvert.domain.usecases.file.UploadFileUseCase;
 @Service
 public class UploadFile implements UploadFileUseCase {
 
-  @Value("${java.io.tmpdir}")
-  private String tmpPath;
-
   @Override
   public void upload(MultipartFile file) throws Exception {
-    String filePath = System.getProperty("user.dir") + "/server/tmp/" + file.getOriginalFilename();
+    String filePath = System.getProperty("user.dir") + "/tmp/" + file.getOriginalFilename();
+
+    System.out.println(filePath);
+
     File newFile = new File(filePath);
     FileOutputStream fos = new FileOutputStream(newFile);
     fos.write(file.getBytes());
