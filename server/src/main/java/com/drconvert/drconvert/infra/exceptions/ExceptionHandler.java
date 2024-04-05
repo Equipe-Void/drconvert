@@ -7,6 +7,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserAlreadyExistsException;
+import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
@@ -19,6 +20,11 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler(BadRequestException.class)
   private ResponseEntity<String> badRequest(BadRequestException exception) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+  }
+
+  @org.springframework.web.bind.annotation.ExceptionHandler(UserNotFoundException.class)
+  private ResponseEntity<String> userNotFound(UserNotFoundException exception) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
   }
 
 }

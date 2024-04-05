@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,10 +20,10 @@ public class Project {
   @Column(name = "id", updatable = false, unique = true, nullable = false)
   private Long id;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @Column(name = "name", unique = true, nullable = false)
+  @Column(nullable = false)
   private String name;
 }
