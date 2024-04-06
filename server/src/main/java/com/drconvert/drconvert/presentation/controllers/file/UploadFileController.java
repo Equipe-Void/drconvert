@@ -62,15 +62,4 @@ public class UploadFileController {
     }
   }
 
-  @GetMapping("/headers")
-  public ResponseEntity<List<String>> mapsHeaders(@RequestBody @Validated MapsHeaderRequestDTO data) {
-    try {
-      List<String> headers = this.mapsHeader.maps(data.filePath(), data.separator());
-
-      return ResponseEntity.status(200).body(headers);
-    } catch (Exception e) {
-      throw new BadRequestException();
-    }
-  }
-
 }
