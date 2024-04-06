@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
+import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 import com.drconvert.drconvert.presentation.errors.UserAlreadyExistsException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
@@ -24,6 +25,11 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
   @org.springframework.web.bind.annotation.ExceptionHandler(UserNotFoundException.class)
   private ResponseEntity<String> userNotFound(UserNotFoundException exception) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+  }
+
+  @org.springframework.web.bind.annotation.ExceptionHandler(ProjectNotFoundException.class)
+  private ResponseEntity<String> projectNotFound(ProjectNotFoundException exception) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
   }
 
