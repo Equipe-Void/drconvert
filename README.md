@@ -2,25 +2,21 @@
 
 <img src ="https://img.shields.io/static/v1?label=status&message=%20in progress&color=red&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=sprint%20atual&message=%20primeira%20sprint&color=yellow&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=cliente&message=%20Dom%20Rock%20&color=blue&style=%3CSTYLE%3E&logo=%3CLOGO%3E">
 
-### Projeto Integrador do 3º Semestre de Banco de Dados
-
 <br>
 
 <p align="left">DrConvert é uma solução para a conversão e mapeamento de dados de arquivos e análise de negócio.</p>
 
 <br>
 
-## 🙅‍♂️ Equipe
-
-#### **Equipe Void**
+## 🙅‍♂️ Equipe Void
 
 #### **Integrantes:**
 
-- João Vitor Marques (Scrum Master)
-- Gabriel Vieira (Product Owner)
-- Ali Mohamed (Desenvolvedor)
-- Cainan Thomas (Desenvolvedor)
-- Guilherme Wunderlich (Desenvolvedor)
+> _Product Owner_ - [Gabriel Vieira]()
+> _Scrum Master_ - [João Vitor Marques](https://www.linkedin.com/in/joao-vitor-da-silva-marques-944b461bb/)
+> _Dev. Team_ - [Ali Mohamed]()
+> _Dev. Team_ - [Cainan Thomas]()
+> _Dev. Team_ - [Guilherme Wunderlich]()
 
 <br>
 
@@ -28,34 +24,62 @@
 
 #### Foram utilizadas as seguintes tecnologias e bibliotecas:
 
-- **Design:** [Figma](https://www.figma.com/)
-- **Ferramenta/Framework backend:** [Spring Boot](https://spring.io/projects/spring-boot)
-- **Ferramenta/Framework frontend:** [NextJS](https://nextjs.org/)
-- **SGBD:** [PostgreSQL](https://www.postgresql.org/)
+> **Design e Prototipagem:** - [Figma](https://www.figma.com/)
+> **Ferramenta/Framework backend:** - [Spring Boot](https://spring.io/projects/spring-boot)
+> **Ferramenta/Framework frontend:** - [NextJS](https://nextjs.org/)
+> **SGBD:** - [MySQL](https://www.mysql.com/)
 
 <br>
 
-## 🕛 Cronograma
+## 📃 Product Backlog
 
-#### Sprint 1: 25/03 - 14/04
+<a href="https://github.com/equipe-void/api-3sem/tree/sp1/backlog/product_backlog.xlsx">Product Backlog</a><br>
 
-#### Sprint 2: 15/09 - 05/05
-
-#### Sprint 3: 06/05 - 26/05
-
-#### Sprint 4: 27/05 - 16/06
+<div>
+  <table>
+    <tr>
+    <td><b>Rank</b></td>
+    <td><b>Estória</b></td>
+    <td><b>Prioridade</b></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Eu, como Administrador, desejo Cadastrar usuários, para que eu possa Permitir o acesso dos usuário ao sistema</td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Eu, como Administrador/Cliente, desejo Realizar o login no sistema, para que eu possa Acessar as funcionalidades do sistema</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Eu, como Cliente, desejo Realizar o upload do arquivo, para que eu possa Visualizar o arquivo mapeado</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Eu, como Cliente, desejo Visualizar/Salvar/Modificar os campos, para que eu possa Verificar, atualizar e adicionar os tipos e nomes dos campos</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Eu, como Cliente, desejo Aplicar as regras de negócio, para que eu possa Realizar as conversões de dados</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Eu, como Cliente, desejo Gerar o .YAML, para que eu possa Obter o arquivo .YAML com o esquema dos dados</td>
+    <td>6</td>
+  </tr>
+  </table>
+</div>
 
 <br>
 
-## 📃 Backlog
+## 📝 Documentação por Sprint
 
-<a href="https://github.com/equipe-void/api-3sem/tree/sp1/backlog/product_backlog.xlsx">Backlog do Produto</a><br>
-
-<br>
-
-## 📝 Documentação das Sprints
-
-<a href="https://github.com/equipe-void/api-3sem/tree/sp1/docs/sprint1/README.md">Sprint 1</a>
+> Documentação - [Sprint 1](https://github.com/equipe-void/api-3sem/tree/sp1/docs/sprint1/README.md)
 
 <br>
 
@@ -63,5 +87,30 @@
 
 ### Pré-requisitos
 
-Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina o [Java jdk](https://www.oracle.com/br/java/technologies/downloads/#java21), [Git](https://git-scm.com) e [Maven Apache](https://maven.apache.org/).
-Além disso, é legal ter um bom editor de código, como o [VSCode](https://code.visualstudio.com/).
+Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina o [Git](https://git-scm.com), [Java jdk](https://www.oracle.com/br/java/technologies/downloads/#java21),
+[Maven Apache](https://maven.apache.org/), [NodeJS](https://nodejs.org/en) e o [MySQL](https://www.mysql.com/). Além disso, é legal ter um bom editor de código, como o [VSCode](https://code.visualstudio.com/).
+
+`Iniciar o backend em modo de desenvolvimento`
+
+```
+  $ cd drconvert
+  $ cd server
+  $ mvn spring-boot:run
+```
+
+`O projeto deve iniciar em http://localhost:8080`
+
+<br>
+<br>
+
+`Iniciar o frontend em modo de desenvolvimento`
+
+```
+  $ git clone https://github.com/equipe-void/drconvert.git
+  $ cd drconvert
+  $ cd web
+  $ npm install ou yarn install
+  $ npm run dev ou yarn run dev
+```
+
+`O projeto deve iniciar em http://localhost:3000`
