@@ -1,7 +1,6 @@
 package com.drconvert.drconvert.domain.model;
 
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -33,14 +32,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-  
+
   @EqualsAndHashCode.Include
   @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, unique = true, nullable = false)
-	private Long id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", updatable = false, unique = true, nullable = false)
+  private Long id;
 
-  @Column(name = "user_type", columnDefinition="varchar(15) default 'COMMON'")
+  @Column(name = "user_type", columnDefinition = "varchar(15) default 'COMMON'")
   private String userType;
 
   @Column(nullable = false, name = "name")
@@ -56,7 +55,7 @@ public class User implements UserDetails {
   @ManyToMany(fetch = FetchType.EAGER)
   private List<Role> roles;
 
- @Override
+  @Override
   public String getUsername() {
     return email;
   }

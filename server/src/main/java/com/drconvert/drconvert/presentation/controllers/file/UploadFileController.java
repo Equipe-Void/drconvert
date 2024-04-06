@@ -5,9 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +17,7 @@ import com.drconvert.drconvert.domain.usecases.file.MapsHeaderUseCase;
 import com.drconvert.drconvert.domain.usecases.file.UploadFileUseCase;
 import com.drconvert.drconvert.infra.repositories.FileRepository;
 import com.drconvert.drconvert.infra.repositories.ProjectRepository;
-import com.drconvert.drconvert.presentation.dto.MapsHeaderRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/files")
