@@ -28,6 +28,9 @@ public class SecurityConfig {
       .authorizeHttpRequests(authorize -> authorize
           .requestMatchers(HttpMethod.POST, "/api/admin/users").hasAuthority("CREATE_USER")
           .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+          .requestMatchers(HttpMethod.POST, "/api/projects").hasAuthority("CREATE_PROJECT")
+          .requestMatchers(HttpMethod.POST, "/api/fields/list").hasAuthority("CREATE_FIELD")
+          .requestMatchers(HttpMethod.POST, "/api/files/upload").hasAuthority("CREATE_PROJECT")
           .anyRequest().authenticated()
       )
       .cors(Customizer.withDefaults())

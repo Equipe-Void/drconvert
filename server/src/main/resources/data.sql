@@ -9,4 +9,5 @@ INSERT INTO roles (role) VALUES ("CREATE_FIELD");
 INSERT INTO roles (role) VALUES ("CREATE_USER");
 
 INSERT INTO users_roles (roles_id, user_id) VALUES (6, 1);
+INSERT INTO users_roles (roles_id, user_id) VALUES (1, 1);
 -- INSERT INTO users_roles (roles_id, user_id) VALUES (2, 1);

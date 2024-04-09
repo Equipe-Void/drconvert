@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
-public class AddFieldController {
+public class AddFieldsController {
   
   @Autowired
   private AddFieldUseCase addField;
@@ -31,7 +31,7 @@ public class AddFieldController {
   @Autowired
   private FindProjectByIdUseCase findProjectById;
 
-  @PostMapping("/fields")
+  @PostMapping("/fields/list")
   public ResponseEntity<List<Field>> addFields(@RequestBody @Validated AddFieldRequestDTO data) {
     List<Field> fields = new ArrayList<>();
 
