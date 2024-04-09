@@ -31,6 +31,7 @@ public class SecurityConfig {
           .requestMatchers(HttpMethod.POST, "/api/projects").hasAuthority("CREATE_PROJECT")
           .requestMatchers(HttpMethod.POST, "/api/fields/list").hasAuthority("CREATE_FIELD")
           .requestMatchers(HttpMethod.POST, "/api/files/upload").hasAuthority("CREATE_PROJECT")
+          .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
           .anyRequest().authenticated()
       )
       .cors(Customizer.withDefaults())
