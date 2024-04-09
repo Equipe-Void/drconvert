@@ -1,18 +1,40 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { Check } from "@phosphor-icons/react";
-import * as Checkbox from "@radix-ui/react-checkbox";
+import Cookie from "js-cookie";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import Input from "./_components/input";
-import logo from "../../public/images/logo.svg";
+import logo from "@/public/images/logo.svg";
+import { login } from "@/app/_services/users/login";
+
+interface LoginProps {
+	email: string;
+	password: string;
+}
 
 export default function Login() {
-	const [rememberMe, setRememberMe] = useState(false);
+	const router = useRouter();
+	const { handleSubmit, register } = useForm<LoginProps>();
 
 	const typesArr = ["CSV", "SQL", "YAML"];
+
+	async function handleSubmitForm(data: LoginProps) {
+		const token = await login(data);
+
+		const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
+
+		Cookie.set("token", token.token, { expires: hours });
+		router.push("/my-projects");
+	}
+
+	useEffect(() => {
+		if (Cookie.get("token")) {
+			router.push("/my-projects");
+		}
+	}, []);
 
 	return (
 		<div className="w-full h-screen overflow-hidden">
@@ -77,32 +99,28 @@ export default function Login() {
 								Entre no sistema preenchendo as credenciais abaixo
 							</p>
 						</div>
-						<div className="w-full flex flex-col gap-8">
-							<Input type="text" placeholder="Endereço de e-mail" />
-							<Input type="password" placeholder="Senha" />
-							<div className="w-full flex items-center gap-4">
-								<Checkbox.Root
-									onCheckedChange={checked => {
-										checked ? setRememberMe(true) : setRememberMe(false);
-									}}
-									className="w-6 h-6 p-1 rounded-md bg-black1">
-									<Checkbox.Indicator>
-										<Check className="w-4 h-4 text-pink" />
-									</Checkbox.Indicator>
-								</Checkbox.Root>
-								<p className="text-xs lg:text-sm text-gray1 font-regular">
-									Lembrar de mim?
-								</p>
+						<form onSubmit={handleSubmit(handleSubmitForm)}>
+							<div className="w-full flex flex-col gap-8">
+								<Input
+									type="text"
+									placeholder="Endereço de e-mail"
+									register={{ ...register("email") }}
+								/>
+								<Input
+									type="password"
+									placeholder="Senha"
+									register={{ ...register("password") }}
+								/>
 							</div>
-						</div>
-						<div className="w-full">
-							<Link
-								href="/"
-								className="w-full h-16 rounded-md bg-red text-white font-bold text-base flex items-center justify-center
+							<div className="w-full">
+								<button
+									type="submit"
+									className="w-full h-16 rounded-md bg-red text-white font-bold text-base flex items-center justify-center
                   cursor-pointer duration-200 hover:bg-red/70">
-								Entrar
-							</Link>
-						</div>
+									Entrar
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

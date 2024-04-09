@@ -9,7 +9,7 @@ const interphases = localFont({
 
 export const metadata: Metadata = {
 	title: "DrConvert",
-	description: "Web app para conversão de dados",
+	description: "Web app para conversão e análise de dados",
 };
 
 export default function RootLayout({

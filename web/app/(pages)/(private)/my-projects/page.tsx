@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Plus } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 
-import ProjectCard from "./_components/project-card";
-import { UploadForm } from "./_components/upload-form";
+import ProjectCard from "../_components/project-card";
+import { UploadForm } from "../_components/upload-form";
 
-export default function Home() {
+export default function MyProjects() {
 	const [open, setOpen] = useState(false);
 
 	return (

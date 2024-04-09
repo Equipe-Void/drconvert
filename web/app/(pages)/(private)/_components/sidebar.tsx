@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { userRoutes } from "../../_utils/routes";
+import { userRoutes } from "../../../_constants/app-routes";
 
 export default function Sidebar() {
 	const pathname = usePathname();

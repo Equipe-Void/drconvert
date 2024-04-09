@@ -4,7 +4,11 @@ import Image from "next/image";
 import logo from "@/public/images/logo.svg";
 import { usePathname } from "next/navigation";
 
-export default function Header() {
+interface HeaderProps {
+	title?: string;
+}
+
+export default function Header({ title }: HeaderProps) {
 	const pathname = usePathname();
 
 	return (
@@ -14,7 +18,11 @@ export default function Header() {
 			</div>
 			<div className="flex-1 flex items-center pl-4">
 				<h1 className="font-bold text-white/90 text-[1.625rem]">
-					{(pathname === "/" && "Meus Projetos") || "Configurações"}
+					{pathname === "/my-projects"
+						? "Meus Projetos"
+						: pathname === "/settings"
+							? "Configurações"
+							: title}
 				</h1>
 			</div>
 		</div>
