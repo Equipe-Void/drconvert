@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Cookie from "js-cookie";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Check } from "@phosphor-icons/react";
+import * as Checkbox from "@radix-ui/react-checkbox";
 
 import Input from "./_components/input";
 import logo from "@/public/images/logo.svg";
@@ -19,14 +21,19 @@ export default function Login() {
 	const router = useRouter();
 	const { handleSubmit, register } = useForm<LoginProps>();
 
+	const [rememberMe, setRememberMe] = useState(false);
+
 	const typesArr = ["CSV", "SQL", "YAML"];
 
 	async function handleSubmitForm(data: LoginProps) {
 		const token = await login(data);
 
-		const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
+		if (rememberMe) {
+			const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
+			Cookie.set("token", token.token, { expires: hours });
+		}
 
-		Cookie.set("token", token.token, { expires: hours });
+		Cookie.set("token", token.token);
 		router.push("/my-projects");
 	}
 
@@ -45,13 +52,13 @@ export default function Login() {
 				<div className="flex-1 translate-y-[15%]">
 					<div className="flex flex-col gap-10 max-w-[25rem]">
 						<h1 className="font-bold text-white text-[2.5rem] leading-[52px]">
-							Converta
+							Gerencie
 							<br />
 							seus dados.{" "}
 							<span className="text-pink text-[2rem]">DrConvert</span>
 						</h1>
 						<p className="font-light text-white/75">
-							Oferecemos uma{" "}
+							O DrConvert é uma{" "}
 							<span className="font-bold text-white">solução simples</span> para
 							converter e mapear seus arquivos{" "}
 							<span className="font-bold text-white">CSV</span>, permitindo o
@@ -99,7 +106,9 @@ export default function Login() {
 								Entre no sistema preenchendo as credenciais abaixo
 							</p>
 						</div>
-						<form onSubmit={handleSubmit(handleSubmitForm)}>
+						<form
+							onSubmit={handleSubmit(handleSubmitForm)}
+							className="flex flex-col gap-16">
 							<div className="w-full flex flex-col gap-8">
 								<Input
 									type="text"
@@ -111,6 +120,20 @@ export default function Login() {
 									placeholder="Senha"
 									register={{ ...register("password") }}
 								/>
+								<div className="w-full flex items-center gap-4">
+									<Checkbox.Root
+										onCheckedChange={checked => {
+											checked ? setRememberMe(true) : setRememberMe(false);
+										}}
+										className="w-6 h-6 p-1 rounded-md bg-black1">
+										<Checkbox.Indicator>
+											<Check className="w-4 h-4 text-pink" />
+										</Checkbox.Indicator>
+									</Checkbox.Root>
+									<p className="text-xs lg:text-sm text-gray1 font-regular">
+										Lembrar de mim?
+									</p>
+								</div>
 							</div>
 							<div className="w-full">
 								<button
