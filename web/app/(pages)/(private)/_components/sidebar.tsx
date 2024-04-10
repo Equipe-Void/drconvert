@@ -4,9 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { userRoutes } from "../../../_constants/app-routes";
+import { useUserStore } from "@/app/_store/user-store";
 
 export default function Sidebar() {
 	const pathname = usePathname();
+
+	const user = useUserStore(state => state.user);
 
 	return (
 		<div className="w-[12.25rem] h-full flex flex-col justify-between outline outline-1 outline-black1 pr-2 py-6">
@@ -27,14 +30,12 @@ export default function Sidebar() {
 				})}
 			</div>
 			<div className="flex gap-2 items-center px-4">
-				<div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-red text-sm bg-black1">
-					JV
+				<div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-red text-sm bg-black1 cursor-pointer">
+					{user.name.split("")[0]}
 				</div>
 				<div className="gap-1">
-					<p className="font-semibold text-gray1 text-xs">João Vitor</p>
-					<p className="font-medium text-gray2 text-[0.625rem]">
-						jvsilvam@outlook.com
-					</p>
+					<p className="font-semibold text-gray1 text-xs">{user.name}</p>
+					<p className="font-medium text-gray2 text-[0.625rem]">{user.email}</p>
 				</div>
 			</div>
 		</div>
