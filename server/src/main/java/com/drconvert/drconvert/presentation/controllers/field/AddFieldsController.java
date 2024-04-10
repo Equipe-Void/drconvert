@@ -14,7 +14,7 @@ import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.field.AddFieldUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.AddFieldRequestDTO;
+import com.drconvert.drconvert.presentation.dto.AddFieldsRequestDTO;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +32,7 @@ public class AddFieldsController {
   private FindProjectByIdUseCase findProjectById;
 
   @PostMapping("/fields")
-  public ResponseEntity<List<Field>> addFields(@RequestBody @Validated AddFieldRequestDTO data) {
+  public ResponseEntity<List<Field>> addFields(@RequestBody @Validated AddFieldsRequestDTO data) {
     List<Field> fields = new ArrayList<>();
 
     for (Field f : data.fields()) {
