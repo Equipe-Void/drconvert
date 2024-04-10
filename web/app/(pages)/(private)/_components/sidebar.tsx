@@ -31,7 +31,7 @@ export default function Sidebar() {
 			</div>
 			<div className="flex gap-2 items-center px-4">
 				<div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-red text-sm bg-black1 cursor-pointer">
-					{user.name.split("")[0]}
+					{Array.from(user.name)[0]}
 				</div>
 				<div className="gap-1">
 					<p className="font-semibold text-gray1 text-xs">{user.name}</p>
