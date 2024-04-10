@@ -34,7 +34,7 @@ public class AuthController {
     User user = this.findUserByEmail.find(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
     if(passwordEncoder.matches(body.password(), user.getPassword())) {
       String token = this.tokenService.generateToken(user);
-      return ResponseEntity.ok(new AuthResponseDTO(token));
+      return ResponseEntity.ok(new AuthResponseDTO(token, user));
     }
     return ResponseEntity.badRequest().build();
   }
