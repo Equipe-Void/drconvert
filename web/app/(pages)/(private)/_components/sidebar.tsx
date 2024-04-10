@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { useUserStore } from "@/app/_store/user-store";
 import { userRoutes } from "../../../_constants/app-routes";
+import { useUserStore } from "@/app/_store/user-store";
 
 export default function Sidebar() {
 	const pathname = usePathname();
