@@ -11,6 +11,7 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import Input from "./_components/input";
 import logo from "@/public/images/logo.svg";
 import { login } from "@/app/_services/users/login";
+import { useUserStore } from "@/app/_store/user-store";
 
 interface LoginProps {
 	email: string;
@@ -20,20 +21,23 @@ interface LoginProps {
 export default function Login() {
 	const router = useRouter();
 	const { handleSubmit, register } = useForm<LoginProps>();
+	const setUser = useUserStore(state => state.addUser);
 
 	const [rememberMe, setRememberMe] = useState(false);
 
 	const typesArr = ["CSV", "SQL", "YAML"];
 
 	async function handleSubmitForm(data: LoginProps) {
-		const token = await login(data);
+		const response = await login(data);
+
+		setUser(response.user);
 
 		if (rememberMe) {
 			const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
-			Cookie.set("token", token.token, { expires: hours });
+			Cookie.set("token", response.token, { expires: hours });
 		}
 
-		Cookie.set("token", token.token);
+		Cookie.set("token", response.token);
 		router.push("/my-projects");
 	}
 
