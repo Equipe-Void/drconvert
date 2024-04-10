@@ -107,6 +107,8 @@ Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina 
 
 `O projeto deve iniciar em http://localhost:8080`
 
+`A documentação das rotas pode ser encontrada em http://localhost:8080/swagger-ui/index.html`
+
 <br>
 <br>
 
