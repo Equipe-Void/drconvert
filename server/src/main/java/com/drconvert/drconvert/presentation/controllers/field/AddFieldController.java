@@ -27,23 +27,18 @@ public class AddFieldController {
 
   @PostMapping("/fields")
   public ResponseEntity<Field> addField(@RequestBody @Validated AddFieldRequestDTO data) {
-    // Obtém o campo do corpo da requisição
     Field field = data.field();
 
-    // Verifica se o projeto associado ao campo existe
     Project project = findProjectById.find(Long.valueOf(field.getProject().getId()))
       .orElseThrow(ProjectNotFoundException::new);
 
-    // Cria um novo objeto Field com os dados recebidos
     Field newField = new Field();
     newField.setName(field.getName());
     newField.setProject(project);
     newField.setType(field.getType());
     
-    // Adiciona o campo ao banco de dados
-    Field addedField = addField.add(newField);
+    Field addedField = this.addField.add(newField);
 
-    // Retorna o campo adicionado com a resposta HTTP
     return ResponseEntity.status(201).body(addedField);
   }
 }

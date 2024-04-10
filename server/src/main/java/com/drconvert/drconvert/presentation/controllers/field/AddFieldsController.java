@@ -31,7 +31,7 @@ public class AddFieldsController {
   @Autowired
   private FindProjectByIdUseCase findProjectById;
 
-  @PostMapping("/fields")
+  @PostMapping("/fields/list")
   public ResponseEntity<List<Field>> addFields(@RequestBody @Validated AddFieldsRequestDTO data) {
     List<Field> fields = new ArrayList<>();
 
