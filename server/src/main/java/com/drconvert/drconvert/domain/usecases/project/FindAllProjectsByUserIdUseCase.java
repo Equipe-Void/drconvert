@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.drconvert.drconvert.domain.model.Project;
 
-public interface FindAllProjectByUserIdUseCase {
+public interface FindAllProjectsByUserIdUseCase {
   
   public List<Project> findAll(Long id);
 

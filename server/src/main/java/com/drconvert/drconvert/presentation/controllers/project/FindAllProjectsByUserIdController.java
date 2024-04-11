@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.model.User;
-import com.drconvert.drconvert.domain.usecases.project.FindAllProjectByUserIdUseCase;
+import com.drconvert.drconvert.domain.usecases.project.FindAllProjectsByUserIdUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByIdUseCase;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
@@ -23,7 +23,7 @@ import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 public class FindAllProjectsByUserIdController {
   
   @Autowired
-  private FindAllProjectByUserIdUseCase findAllProjectsByUserId;
+  private FindAllProjectsByUserIdUseCase findAllProjectsByUserId;
 
   @Autowired
   private FindUserByIdUseCase findUserByIdUseCase;
