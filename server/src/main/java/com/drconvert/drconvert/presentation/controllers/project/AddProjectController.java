@@ -40,6 +40,7 @@ public class AddProjectController {
       Project project = new Project();
       project.setName(data.name());
       project.setUser(userExists.get());
+      project.setTotalFields(data.totalFields());
 
       Project newProject = this.addProject.add(project);
 
