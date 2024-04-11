@@ -1,5 +1,7 @@
 package com.drconvert.drconvert.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class File {
   @Column(name = "id", updatable = false, unique = true, nullable = false)
   private Long id;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "project_id", nullable = false)
   private Project project;

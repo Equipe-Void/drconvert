@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,8 +35,11 @@ public class Project {
   @Column(nullable = false)
   private String name;
 
-  @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Field> fields;
+
+  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<File> files;
 
   private Long totalFields;
 }
