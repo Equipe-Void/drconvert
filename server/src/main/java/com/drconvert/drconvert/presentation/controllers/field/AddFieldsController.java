@@ -46,6 +46,8 @@ public class AddFieldsController {
       field.setName(f.getName());
       field.setProject(projectExists.get());
       field.setType(f.getType());
+      field.setIsIdentifier(f.getIsIdentifier());
+      field.setIsNullable(f.getIsNullable());
       
       fields.add(this.addField.add(field));
     }

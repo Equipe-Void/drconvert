@@ -36,6 +36,8 @@ public class AddFieldController {
     newField.setName(field.getName());
     newField.setProject(project);
     newField.setType(field.getType());
+    newField.setIsIdentifier(field.getIsIdentifier());
+    newField.setIsNullable(field.getIsNullable());
     
     Field addedField = this.addField.add(newField);
 

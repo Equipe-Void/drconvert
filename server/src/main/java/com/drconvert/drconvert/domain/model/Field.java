@@ -1,5 +1,7 @@
 package com.drconvert.drconvert.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +28,14 @@ public class Field {
   @Column(name = "type", nullable = false)
   private String type;
 
+  @Column(name = "is_identifier", nullable = false)
+  private Boolean isIdentifier;
+
+  @Column(name = "is_nullable", nullable = false)
+  private Boolean isNullable;
+
   @ManyToOne
+  @JsonIgnore
   @JoinColumn(name = "project_id", nullable = false)
   private Project project;
 
