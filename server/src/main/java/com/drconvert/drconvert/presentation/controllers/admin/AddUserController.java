@@ -6,6 +6,7 @@ import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.domain.usecases.admin.AddUserUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByEmailUseCase;
 import com.drconvert.drconvert.presentation.dto.AddUserRequestDTO;
+import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserAlreadyExistsException;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +36,13 @@ public class AddUserController {
 
   @PostMapping("/users")
   public ResponseEntity<?> addUser(@RequestBody @Validated AddUserRequestDTO data) {
+    Optional<User> userExists = this.findUserByEmail.find(data.email());
+
+    if(userExists.isPresent()) {
+      throw new UserAlreadyExistsException();
+    }
+
     try {
-      Optional<User> userExists = this.findUserByEmail.find(data.email());
-
-      if(userExists.isPresent()) {
-        throw new UserAlreadyExistsException();
-      }
-
       User user = new User();
       user.setEmail(data.email());
       user.setPassword(passwordEncoder.encode(data.password()));
@@ -51,7 +52,7 @@ public class AddUserController {
 
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+      throw new BadRequestException("Erro ao criar este usuário");
     }
   }
   

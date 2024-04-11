@@ -38,7 +38,7 @@ public class UploadFileController {
 
       return ResponseEntity.status(201).body(headers);
     } catch (Exception e) {
-      throw new BadRequestException();
+      throw new BadRequestException("Erro ao fazer upload deste arquivo");
     }
   }
 

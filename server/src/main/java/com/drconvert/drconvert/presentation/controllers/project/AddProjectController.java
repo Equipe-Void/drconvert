@@ -46,7 +46,7 @@ public class AddProjectController {
 
       return ResponseEntity.status(201).body(newProject);
     } catch (Exception e) {
-      throw new BadRequestException();
+      throw new BadRequestException("Erro ao adicionar um projeto");
     }
   }
 

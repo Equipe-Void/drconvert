@@ -13,6 +13,7 @@ import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.field.AddFieldUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
 import com.drconvert.drconvert.presentation.dto.AddFieldRequestDTO;
+import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
 @RestController
@@ -32,15 +33,19 @@ public class AddFieldController {
     Project project = findProjectById.find(Long.valueOf(field.getProject().getId()))
       .orElseThrow(ProjectNotFoundException::new);
 
-    Field newField = new Field();
-    newField.setName(field.getName());
-    newField.setProject(project);
-    newField.setType(field.getType());
-    newField.setIsIdentifier(field.getIsIdentifier());
-    newField.setIsNullable(field.getIsNullable());
-    
-    Field addedField = this.addField.add(newField);
+    try {
+      Field newField = new Field();
+      newField.setName(field.getName());
+      newField.setProject(project);
+      newField.setType(field.getType());
+      newField.setIsIdentifier(field.getIsIdentifier());
+      newField.setIsNullable(field.getIsNullable());
+      
+      Field addedField = this.addField.add(newField);
 
-    return ResponseEntity.status(201).body(addedField);
+      return ResponseEntity.status(201).body(addedField);
+    } catch (Exception e) {
+      throw new BadRequestException("Erro ao adicionar campo");
+    }
   }
 }

@@ -14,6 +14,8 @@ import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.infra.security.TokenService;
 import com.drconvert.drconvert.presentation.dto.AuthResponseDTO;
 import com.drconvert.drconvert.presentation.dto.AuthenticationDTO;
+import com.drconvert.drconvert.presentation.errors.BadRequestException;
+import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
 @CrossOrigin("*")
 @RestController
@@ -31,12 +33,17 @@ public class AuthController {
 
   @PostMapping("/auth")
   public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthenticationDTO body){
-    User user = this.findUserByEmail.find(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
-    if(passwordEncoder.matches(body.password(), user.getPassword())) {
-      String token = this.tokenService.generateToken(user);
-      return ResponseEntity.ok(new AuthResponseDTO(token, user));
+    User user = this.findUserByEmail.find(body.email()).orElseThrow(UserNotFoundException::new);
+
+    try {
+      if(passwordEncoder.matches(body.password(), user.getPassword())) {
+        String token = this.tokenService.generateToken(user);
+        return ResponseEntity.ok(new AuthResponseDTO(token, user));
+      }
+      return ResponseEntity.badRequest().build();
+    } catch (Exception e) {
+      throw new BadRequestException("Erro ao autenticar este usuário");
     }
-    return ResponseEntity.badRequest().build();
   }
   
 }

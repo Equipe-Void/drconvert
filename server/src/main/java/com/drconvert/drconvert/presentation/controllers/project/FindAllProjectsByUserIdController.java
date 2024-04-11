@@ -15,6 +15,7 @@ import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.domain.usecases.project.FindAllProjectsByUserIdUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByIdUseCase;
+import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
 @CrossOrigin("*")
@@ -36,10 +37,13 @@ public class FindAllProjectsByUserIdController {
       throw new UserNotFoundException();
     }
 
-    List<Project> projects = this.findAllProjectsByUserId.findAll(Long.valueOf(id));
+    try {
+      List<Project> projects = this.findAllProjectsByUserId.findAll(Long.valueOf(id));
 
-    return ResponseEntity.ok(projects);
-
+      return ResponseEntity.ok(projects);
+    } catch (Exception e) {
+      throw new BadRequestException("Erro ao buscar os projetos deste usuário");
+    }
   }
 
 }
