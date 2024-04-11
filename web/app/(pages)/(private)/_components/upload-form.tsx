@@ -1,7 +1,11 @@
 "use client";
 
+import { useDropzone } from "react-dropzone";
+import { useCallback, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Trash, Upload } from "@phosphor-icons/react";
+
+import { convertBytes } from "@/app/_functions/convert-size";
 
 interface UploadFormProps {
 	open?: boolean;
@@ -9,6 +13,27 @@ interface UploadFormProps {
 }
 
 export function UploadForm({ open, setOpen }: UploadFormProps) {
+	const [files, setFiles] = useState<File[] | null>(null);
+
+	const removeFile = (index: number) => {
+		setFiles([...files!.slice(0, index), ...files!.slice(index + 1)]);
+	};
+
+	const removeAllFiles = () => {
+		setFiles(null);
+	};
+
+	const onDrop = useCallback((files: File[]) => {
+		setFiles(files);
+	}, []);
+
+	const dropzone = useDropzone({
+		onDrop,
+		accept: {
+			".csv": [".csv"],
+		},
+	});
+
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen} defaultOpen={false}>
 			<Dialog.Portal>
@@ -24,12 +49,17 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 							</div>
 						</Dialog.Title>
 
-						<div className="border-dashed border-2 border-gray2 rounded-md flex flex-col gap-8 mx-8 mt-8 py-8 items-center justify-center">
+						<div
+							{...dropzone.getRootProps()}
+							className={`border-dashed border-2 border-gray2 hover:border-pink/65 duration-200 ${dropzone.isDragActive && "border-pink/65"} rounded-md flex flex-col gap-8 mx-8 mt-8 py-8 items-center justify-center cursor-pointer`}>
+							<input {...dropzone.getInputProps()} className="hidden" />
 							<Upload className="h-7 w-7 text-white" weight="fill" />
 							<div className="flex flex-col gap-1 items-center">
 								<p className="font-medium text-xs text-white">
 									Arraste e solte seu arquivo ou{" "}
-									<span className="text-pink">selecione manualmente</span>
+									<span className="text-pink">
+										clique para enviar manualmente
+									</span>
 								</p>
 								<p className="font-medium text-xs text-gray1">
 									Apenas formato de arquivo .csv
@@ -39,21 +69,34 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 
 						<div className="text-white text-xs font-semibold flex flex-col gap-3 px-8 py-8">
 							<p className="text-white text-xs font-semibold">
-								Arquivos selecionados <span className="text-gray1">(1)</span>
+								Arquivos selecionados{" "}
+								<span className="text-gray1">({files?.length})</span>
 							</p>
-							<div className="bg-gray2 rounded-md px-4 py-3 flex items-center justify-between">
-								<div>
-									<p className="font-semibold text-xs text-white/80">
-										arquivo.csv
-									</p>
-									<p className="font-medium text-[10px] text-gray1">3.5mb</p>
-								</div>
-								<Trash className="h-4 w-4 text-gray1 hover:text-red duration-200 cursor-pointer" />
-							</div>
+							{files &&
+								files.map((file, index) => {
+									return (
+										<div className="bg-gray2 rounded-md px-4 py-3 flex items-center justify-between">
+											<div>
+												<p className="font-semibold text-xs text-white/80">
+													{file.name}
+												</p>
+												<p className="font-medium text-[10px] text-gray1">
+													{convertBytes(file.size)}
+												</p>
+											</div>
+											<Trash
+												onClick={() => removeFile(index)}
+												className="h-4 w-4 text-gray1 hover:text-red duration-200 cursor-pointer"
+											/>
+										</div>
+									);
+								})}
 						</div>
 
 						<footer className="flex gap-4 w-full mt-4 px-8 pb-8">
-							<Dialog.Close className="cursor-pointer py-3 px-8 bg-gray2 rounded-md flex items-center justify-center font-semibold text-white text-xs">
+							<Dialog.Close
+								onClick={() => removeAllFiles()}
+								className="cursor-pointer py-3 px-8 bg-gray2 rounded-md flex items-center justify-center font-semibold text-white text-xs">
 								Cancelar
 							</Dialog.Close>
 							<button
