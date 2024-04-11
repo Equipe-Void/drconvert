@@ -2,9 +2,6 @@ package com.drconvert.drconvert.domain.model;
 
 import java.util.List;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
