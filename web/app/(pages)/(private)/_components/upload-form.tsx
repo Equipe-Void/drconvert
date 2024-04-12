@@ -30,7 +30,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	const dropzone = useDropzone({
 		onDrop,
 		accept: {
-			".csv": [".csv"],
+			"text/csv": [".csv"],
 		},
 	});
 
