@@ -46,60 +46,70 @@
   <table>
     <tr>
       <td><b>Estória</b></td>
+      <td><b>Critérios de Aceitação</b></td>
       <td><b>Prioridade</b></td>
       <td><b>Requisitos</b></td>
       <td><b>Sprint</b></td>
     </tr>
     <tr>
       <td>Eu, como Administrador, desejo Cadastrar usuários, para que eu possa Permitir o acesso dos usuário ao sistema</td>
+      <td>Somente o administrador poderá cadastrar usuários, os usuários podem ter permissões distintas</td>
       <td>6</td>
       <td>1</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Administrador/Cliente, desejo Realizar o login no sistema, para que eu possa Acessar as funcionalidades do sistema</td>
+      <td>O login deve será feito com um email e senha válidos, direcionando o usuário à tela "meus projetos</td>
       <td>7</td>
       <td>1</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Realizar o upload do arquivo, para que eu possa Visualizar o arquivo mapeado</td>
+      <td>O arquivo deverá ser do tipo .csv</td>
       <td>1</td>
       <td>2</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Visualizar os campos, para que eu possa verificar e selecionar os tipos dos campos</td>
+      <td>Após o upload deverá ser possivel visualizar os campos mapeados no arquivo</td>
       <td>2</td>
       <td>3</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Salvar os campos, para que eu possa acessar os campos quando necessário</td>
+      <td>Somente o administrador poderá cadastrar usuários, os usuários podem ter permissões O usuário deverá verificar os tipos dos campos mapeados, poderá adicionar e remover campos</td>
       <td>4</td>
       <td>3</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Modificar os campos, para que eu possa atualizar e adicionar os tipos e nomes dos campos</td>
+      <td>O usuário poderá adicionar e remover arquivos de um projeto, editar e excluir campos mapeados</td>
       <td>5</td>
       <td>3</td>
       <td>1ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Aplicar as regras de negócio, para que eu possa Realizar as conversões de dados</td>
+      <td>Os dados ao ser convertidos já deve ser armazenados nos sistema com as respctivas conversões</td>
       <td>3</td>
       <td>4</td>
       <td>2ª</td>
     </tr>
     <tr>
       <td>Eu, como Administrador, desejo Ter acesso à um dashboard, para que eu possa visualizar os Usuários e Arquivos no sistema</td>
+      <td>Somente o admnistrador terá acesso ao dashboard</td>
       <td>8</td>
       <td>5</td>
       <td>2ª</td>
     </tr>
     <tr>
       <td>Eu, como Cliente, desejo Gerar o .YAML, para que eu possa Obter o arquivo .YAML com o esquema dos dados</td>
+      <td>O arquivo .YAML deve conter todas as informações até a etapa atual do arquivo</td>
       <td>9</td>
       <td>Bônus</td>
       <td>4ª</td>
