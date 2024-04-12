@@ -45,40 +45,94 @@
 <div>
   <table>
     <tr>
-    <td><b>Rank</b></td>
-    <td><b>Estória</b></td>
-    <td><b>Prioridade</b></td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>Eu, como Administrador, desejo Cadastrar usuários, para que eu possa Permitir o acesso dos usuário ao sistema</td>
-    <td>4</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>Eu, como Administrador/Cliente, desejo Realizar o login no sistema, para que eu possa Acessar as funcionalidades do sistema</td>
-    <td>5</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>Eu, como Cliente, desejo Realizar o upload do arquivo, para que eu possa Visualizar o arquivo mapeado</td>
-    <td>1</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>Eu, como Cliente, desejo Visualizar/Salvar/Modificar os campos, para que eu possa Verificar, atualizar e adicionar os tipos e nomes dos campos</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>Eu, como Cliente, desejo Aplicar as regras de negócio, para que eu possa Realizar as conversões de dados</td>
-    <td>3</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Eu, como Cliente, desejo Gerar o .YAML, para que eu possa Obter o arquivo .YAML com o esquema dos dados</td>
-    <td>6</td>
-  </tr>
+      <td><b>Estória</b></td>
+      <td><b>Prioridade</b></td>
+      <td><b>Requisitos</b></td>
+      <td><b>Sprint</b></td>
+    </tr>
+    <tr>
+      <td>Eu, como Administrador, desejo Cadastrar usuários, para que eu possa Permitir o acesso dos usuário ao sistema</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Administrador/Cliente, desejo Realizar o login no sistema, para que eu possa Acessar as funcionalidades do sistema</td>
+      <td>7</td>
+      <td>1</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Realizar o upload do arquivo, para que eu possa Visualizar o arquivo mapeado</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Visualizar os campos, para que eu possa verificar e selecionar os tipos dos campos</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Salvar os campos, para que eu possa acessar os campos quando necessário</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Modificar os campos, para que eu possa atualizar e adicionar os tipos e nomes dos campos</td>
+      <td>5</td>
+      <td>3</td>
+      <td>1ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Aplicar as regras de negócio, para que eu possa Realizar as conversões de dados</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Administrador, desejo Ter acesso à um dashboard, para que eu possa visualizar os Usuários e Arquivos no sistema</td>
+      <td>8</td>
+      <td>5</td>
+      <td>2ª</td>
+    </tr>
+    <tr>
+      <td>Eu, como Cliente, desejo Gerar o .YAML, para que eu possa Obter o arquivo .YAML com o esquema dos dados</td>
+      <td>9</td>
+      <td>Bônus</td>
+      <td>4ª</td>
+    </tr>
+  </table>
+
+  <br>
+  
+  <table>
+    <tr>
+      <td><b>Identificador</b></td>
+      <td><b>Requisitos</b></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Desenvolver uma interface de cadastro do cliente, solução e usuários autorizados a configurar os dados</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Desenvolver uma interface de upload de dados csv ou excel e apresentação da estrutura dos dados</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Desenvolver uma interface que define quais campos serão mapeados como chave de identificação dos dados</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Desenvolver uma interface que será aplicada uma regra comum aos clientes</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Desenvolver uma interface para análise de dados no sistema</td>
+    </tr>
   </table>
 </div>
 
