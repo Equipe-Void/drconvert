@@ -6,6 +6,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Trash, Upload } from "@phosphor-icons/react";
 
 import { convertBytes } from "@/app/_functions/convert-size";
+import { uploadFile } from "@/app/_services/users/upload-file";
+import { createProject } from "@/app/_services/users/project";
+import { useUserStore } from "@/app/_store/user-store";
 
 interface UploadFormProps {
 	open?: boolean;
@@ -13,6 +16,8 @@ interface UploadFormProps {
 }
 
 export function UploadForm({ open, setOpen }: UploadFormProps) {
+	const user = useUserStore(state => state.user);
+
 	const [files, setFiles] = useState<File[] | null>(null);
 
 	const removeFile = (index: number) => {
@@ -33,6 +38,23 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 			"text/csv": [".csv"],
 		},
 	});
+
+	const handleUpload = async () => {
+		if (files) {
+			const project = await createProject({
+				userId: user.id,
+				name: "Projeto 2",
+			});
+
+			const headers = await uploadFile({
+				file: files[0],
+				projectId: project.id,
+				separator: ",",
+			});
+
+			console.log(headers);
+		}
+	};
 
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen} defaultOpen={false}>
@@ -101,6 +123,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 							</Dialog.Close>
 							<button
 								type="submit"
+								onClick={() => handleUpload()}
 								className="cursor-pointer py-3 w-fit flex-1 bg-pink rounded-md flex items-center justify-center font-semibold text-white text-xs">
 								Enviar arquivo
 							</button>

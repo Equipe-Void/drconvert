@@ -7,7 +7,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import ProjectCard from "../_components/project-card";
 import { useUserStore } from "@/app/_store/user-store";
 import { UploadForm } from "../_components/upload-form";
-import { Project, findAllProjects } from "@/app/_services/users/projects";
+import { Project, findAllProjects } from "@/app/_services/users/project";
 
 export default function MyProjects() {
 	const user = useUserStore(state => state.user);

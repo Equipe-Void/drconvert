@@ -7,7 +7,7 @@ interface ProjectStore {
 	removeProject: () => void;
 }
 
-export const useProjectStore = create<ProjectStore>(set => ({
+export const useNonSavedProjectStore = create<ProjectStore>(set => ({
 	project: {} as Project,
 	addProject: project => set(state => ({ project: project })),
 	removeProject: () => set({ project: {} as Project }),

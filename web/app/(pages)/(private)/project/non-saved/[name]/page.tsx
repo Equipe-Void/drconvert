@@ -2,12 +2,9 @@
 
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
-import FieldCard from "../_components/FieldCard";
-import { useProjectStore } from "@/app/_store/actual-project-store";
+import FieldCard from "../../_components/FieldCard";
 
-export default function Project() {
-	const project = useProjectStore(state => state.project);
-
+export default function NonSaved() {
 	return (
 		<div>
 			<div className="flex p-8  space-x-2">
@@ -53,14 +50,14 @@ export default function Project() {
 								<th className="px-6 py-3 font-normal">Tipo do campo</th>
 								<th className="px-6 py-3 font-normal">Identificador</th>
 								<th className="px-6 py-3 float-right text-gray1 font-normal">
-									Total de campos ({project.fields.length})
+									Total de campos (1)
 								</th>
 							</tr>
 						</thead>
 						<tbody className="pl-8 pr-8">
-							{project.fields.map(field => {
-								return <FieldCard field={field} key={field.id} />;
-							})}
+							{/* return <FieldCard field={field} key={field.id} />; */}
+							{/* {project.fields.map(field => {
+							})} */}
 						</tbody>
 					</table>
 				</div>

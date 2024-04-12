@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { GearSix } from "@phosphor-icons/react";
 
-import { Project } from "@/app/_services/users/projects";
+import { Project } from "@/app/_services/users/project";
 import { useProjectStore } from "@/app/_store/actual-project-store";
 
 interface ProjectCardProps {
