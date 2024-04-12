@@ -22,6 +22,9 @@ export const APP_ROUTES = {
 			settings: {
 				name: "/settings",
 			},
+			project: {
+				name: "/project",
+			},
 		},
 	},
 	public: {
