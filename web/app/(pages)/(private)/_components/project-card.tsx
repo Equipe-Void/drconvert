@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { GearSix } from "@phosphor-icons/react";
 
 import { Project } from "@/app/_services/users/projects";
+import { useProjectStore } from "@/app/_store/actual-project-store";
 
 interface ProjectCardProps {
 	project: Project;
@@ -11,6 +12,24 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
 	const router = useRouter();
+
+	const actualProject = useProjectStore(state => state.addProject);
+
+	const getIdentifiersFields = () => {
+		let fieldsIdentifiers = [];
+		project.fields.map(field => {
+			if (field.isIdentifier === true) {
+				fieldsIdentifiers.push(field);
+			}
+			null;
+		});
+		return fieldsIdentifiers.length;
+	};
+
+	const handleGoToProject = () => {
+		actualProject(project);
+		router.push(`/project/${project.id}`);
+	};
 
 	return (
 		<div className="bg-black1 h-max rounded-md min-w-[30.938rem] px-6 py-6 hover:bg-black1/85 duration-200">
@@ -33,20 +52,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 				</div>
 				<div className="flex flex-col gap-1">
 					<p className="font-bold text-white text-4xl">
-						{project.fields.map(field => {
-							let fieldsIdentifiers = [];
-							if (field.isIdentifier) {
-								fieldsIdentifiers.push(field);
-							}
-							return fieldsIdentifiers.length;
-						})}
+						{getIdentifiersFields()}
 					</p>
 					<p className="font-medium text-white/35 text-xs">Chaves primárias</p>
 				</div>
 			</div>
 			<div className="flex justify-end">
 				<div
-					onClick={() => router.push("/project")}
+					onClick={() => handleGoToProject()}
 					className="cursor-pointer w-max font-bold text-white/75 text-xs bg-gray2/35 rounded-md px-4 py-3 hover:text-white duration-200">
 					IR PARA O PROJETO
 				</div>
