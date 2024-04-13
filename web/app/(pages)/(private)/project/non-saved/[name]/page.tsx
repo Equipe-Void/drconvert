@@ -6,7 +6,14 @@ import FieldCard from "../../_components/FieldCard";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
 export default function NonSaved() {
-	const headers = useNonSavedProjectStore(state => state.headers);
+	const [headers, addHeaders] = useNonSavedProjectStore(state => [
+		state.headers,
+		state.addHeaders,
+	]);
+
+	const handleAddField = async () => {
+		addHeaders([...headers, "Novo campo"]);
+	};
 
 	return (
 		<div>
@@ -36,7 +43,7 @@ export default function NonSaved() {
 							SALVAR
 						</button>
 						<button
-							type="submit"
+							onClick={() => handleAddField()}
 							className=" w-3/5 cursor-pointer py-3 px-8 bg-gray2 rounded-md items-center justify-center font-semibold text-white text-xs flex gap-2">
 							<Plus className="h-5 w-5 text-white" />
 							ADICIONAR CAMPO
@@ -59,7 +66,7 @@ export default function NonSaved() {
 						</thead>
 						<tbody className="pl-8 pr-8">
 							{headers.map((header, key) => {
-								return <FieldCard header={header} key={key} />;
+								return <FieldCard nonSaved header={header} key={key} />;
 							})}
 						</tbody>
 					</table>

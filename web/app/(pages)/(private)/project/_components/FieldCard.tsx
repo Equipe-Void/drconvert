@@ -1,5 +1,6 @@
 "use client";
 
+import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 import { Trash } from "@phosphor-icons/react";
 
 interface FieldCardProps {
@@ -11,9 +12,18 @@ interface FieldCardProps {
 		isNullable: boolean;
 	};
 	header?: string;
+	nonSaved: boolean;
 }
 
-export default function FieldCard({ field, header }: FieldCardProps) {
+export default function FieldCard({ field, nonSaved, header }: FieldCardProps) {
+	const removeHeader = useNonSavedProjectStore(state => state.removeHeaders);
+
+	const handleRemoveHeader = () => {
+		if (nonSaved) {
+			removeHeader(header!);
+		}
+	};
+
 	return (
 		<tr className="border-b dark:bg-black1 border-gray2">
 			<td className="px-6 py-4">
@@ -66,7 +76,10 @@ export default function FieldCard({ field, header }: FieldCardProps) {
 				</div>
 			</td>
 			<td className="px-6 py-4 float-right">
-				<Trash className="h-10 w-10 text-gray1 hover:text-black1 cursor-pointer hover:bg-pink/80 duration-200 hover:shadow-button p-2 rounded-full" />
+				<Trash
+					onClick={() => handleRemoveHeader()}
+					className="h-10 w-10 text-gray1 hover:text-black1 cursor-pointer hover:bg-pink/80 duration-200 hover:shadow-button p-2 rounded-full"
+				/>
 			</td>
 		</tr>
 	);
