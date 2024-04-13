@@ -21,10 +21,9 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	const router = useRouter();
 
 	const user = useUserStore(state => state.user);
-	const [addHeaders, addProject] = useNonSavedProjectStore(state => [
-		state.addHeaders,
-		state.addProject,
-	]);
+	const [addHeaders, addProject, addTotalFields] = useNonSavedProjectStore(
+		state => [state.addHeaders, state.addProject, state.addTotalFields],
+	);
 
 	const [files, setFiles] = useState<File[] | null>(null);
 
@@ -62,6 +61,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 
 			addProject(project);
 			addHeaders(headers);
+			addTotalFields(headers.length);
 
 			router.push(
 				`/project/non-saved/${project.name.toLocaleLowerCase().split(" ").toString()}`,

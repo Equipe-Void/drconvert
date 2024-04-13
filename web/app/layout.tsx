@@ -21,6 +21,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				className={`${interphases.variable} font-sans bg-black0 select-none`}>
+				<link rel="icon" href="/images/favicon.ico" sizes="any" />
 				{children}
 			</body>
 		</html>

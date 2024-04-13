@@ -4,10 +4,13 @@ import { Project } from "../_services/users/project";
 interface ProjectStore {
 	project: Project;
 	headers: string[];
+	totalFields: number;
 	addProject: (project: Project) => void;
 	removeProject: () => void;
 	addHeaders: (headers: string[]) => void;
 	removeHeaders: () => void;
+	addTotalFields: (totalFields: number) => void;
+	removeTotalFields: () => void;
 }
 
 export const useNonSavedProjectStore = create<ProjectStore>(set => ({
@@ -17,4 +20,7 @@ export const useNonSavedProjectStore = create<ProjectStore>(set => ({
 	headers: [],
 	addHeaders: headers => set(state => ({ headers: headers })),
 	removeHeaders: () => set({ headers: [] }),
+	totalFields: 0,
+	addTotalFields: totalFields => set(state => ({ totalFields: totalFields })),
+	removeTotalFields: () => set({ totalFields: 0 }),
 }));
