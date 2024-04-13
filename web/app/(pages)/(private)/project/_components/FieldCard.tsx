@@ -3,16 +3,17 @@
 import { Trash } from "@phosphor-icons/react";
 
 interface FieldCardProps {
-	field: {
+	field?: {
 		id: number;
 		name: string;
 		type: string;
 		isIdentifier: boolean;
 		isNullable: boolean;
 	};
+	header?: string;
 }
 
-export default function FieldCard({ field }: FieldCardProps) {
+export default function FieldCard({ field, header }: FieldCardProps) {
 	return (
 		<tr className="border-b dark:bg-black1 border-gray2">
 			<td className="px-6 py-4">
@@ -21,7 +22,7 @@ export default function FieldCard({ field }: FieldCardProps) {
 					<input
 						type="text"
 						placeholder="Digite um campo..."
-						value={field.name}
+						value={(field && field.name) || (header && header)}
 						className="w-full h-full bg-transparent placeholder-gray1 outline-none px-8 font-normal text-sm text-gray1 focus-within:text-white rounded-md"
 					/>
 				</div>

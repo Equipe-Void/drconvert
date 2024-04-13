@@ -3,8 +3,11 @@
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
 import FieldCard from "../../_components/FieldCard";
+import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
 export default function NonSaved() {
+	const headers = useNonSavedProjectStore(state => state.headers);
+
 	return (
 		<div>
 			<div className="flex p-8  space-x-2">
@@ -50,14 +53,14 @@ export default function NonSaved() {
 								<th className="px-6 py-3 font-normal">Tipo do campo</th>
 								<th className="px-6 py-3 font-normal">Identificador</th>
 								<th className="px-6 py-3 float-right text-gray1 font-normal">
-									Total de campos (1)
+									Total de campos ({headers.length})
 								</th>
 							</tr>
 						</thead>
 						<tbody className="pl-8 pr-8">
-							{/* return <FieldCard field={field} key={field.id} />; */}
-							{/* {project.fields.map(field => {
-							})} */}
+							{headers.map((header, key) => {
+								return <FieldCard header={header} key={key} />;
+							})}
 						</tbody>
 					</table>
 				</div>

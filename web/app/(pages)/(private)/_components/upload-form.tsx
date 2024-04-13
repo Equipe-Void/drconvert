@@ -9,6 +9,8 @@ import { convertBytes } from "@/app/_functions/convert-size";
 import { uploadFile } from "@/app/_services/users/upload-file";
 import { createProject } from "@/app/_services/users/project";
 import { useUserStore } from "@/app/_store/user-store";
+import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
+import { useRouter } from "next/navigation";
 
 interface UploadFormProps {
 	open?: boolean;
@@ -16,7 +18,13 @@ interface UploadFormProps {
 }
 
 export function UploadForm({ open, setOpen }: UploadFormProps) {
+	const router = useRouter();
+
 	const user = useUserStore(state => state.user);
+	const [addHeaders, addProject] = useNonSavedProjectStore(state => [
+		state.addHeaders,
+		state.addProject,
+	]);
 
 	const [files, setFiles] = useState<File[] | null>(null);
 
@@ -52,7 +60,12 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 				separator: ",",
 			});
 
-			console.log(headers);
+			addProject(project);
+			addHeaders(headers);
+
+			router.push(
+				`/project/non-saved/${project.name.toLocaleLowerCase().split(" ").toString()}`,
+			);
 		}
 	};
 

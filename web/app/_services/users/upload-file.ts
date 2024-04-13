@@ -8,10 +8,6 @@ interface UploadFileRequest {
 	separator: string;
 }
 
-interface Headers {
-	Array: string;
-}
-
 export async function uploadFile({
 	file,
 	projectId,
@@ -22,7 +18,7 @@ export async function uploadFile({
 	formData.append("projectId", projectId.toString());
 	formData.append("separator", separator);
 
-	return await fetchWrapper<Headers>("files/upload", {
+	return await fetchWrapper<string[]>("files/upload", {
 		method: "POST",
 		body: formData,
 		headers: new Headers({
