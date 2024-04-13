@@ -12,6 +12,7 @@ import Input from "./_components/input";
 import logo from "@/public/images/logo.svg";
 import { login } from "@/app/_services/users/login";
 import { useUserStore } from "@/app/_store/user-store";
+import Popup from "@/app/_components/popup";
 
 interface LoginProps {
 	email: string;
@@ -23,11 +24,16 @@ export default function Login() {
 	const { handleSubmit, register } = useForm<LoginProps>();
 	const setUser = useUserStore(state => state.addUser);
 
+	const [open, setOpen] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);
 
 	const typesArr = ["CSV", "SQL", "YAML"];
 
 	async function handleSubmitForm(data: LoginProps) {
+		if (!data.email || !data.password) {
+			setOpen(true);
+		}
+
 		const response = await login(data);
 
 		setUser(response.user);
@@ -49,6 +55,7 @@ export default function Login() {
 
 	return (
 		<div className="w-full h-screen overflow-hidden">
+			<Popup open={open} setOpen={setOpen} />
 			<div className="px-4">
 				<Image src={logo} alt="DrConvert logo" />
 			</div>
