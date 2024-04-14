@@ -19,6 +19,7 @@ const config: Config = {
 				black1: "#212224",
 				pink: "#FF3465",
 				red: "#8E2841",
+				green: "#5FB46D",
 			},
 			boxShadow: {
 				button: "0px 0px 30px rgba(255, 52, 101, .45)",

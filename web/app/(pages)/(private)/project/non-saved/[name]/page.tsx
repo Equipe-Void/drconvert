@@ -1,75 +1,116 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
-import FieldCard from "../../_components/FieldCard";
+import FieldCard from "../../_components/field-card";
+import { remove_accents } from "@/app/_functions/remove-accents";
+import { Field, createFields } from "@/app/_services/users/field";
+import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
 export default function NonSaved() {
-	const [headers, addHeaders] = useNonSavedProjectStore(state => [
-		state.headers,
-		state.addHeaders,
-	]);
+	const router = useRouter();
 
-	const handleAddField = async () => {
+	const [fields, removefields] = useNonSavedFieldStore(state => [
+		state.fields,
+		state.removefields,
+	]);
+	const [headers, addHeaders, project, removeProject, removeHeaders] =
+		useNonSavedProjectStore(state => [
+			state.headers,
+			state.addHeaders,
+			state.project,
+			state.removeProject,
+			state.removeHeaders,
+		]);
+
+	const handleAddField = () => {
 		addHeaders([...headers, "Novo campo"]);
 	};
 
+	const handleCreateFields = async () => {
+		const fieldsToSave = [] as Field[];
+
+		fields.map(f => {
+			const newField: Field = {
+				name: remove_accents(f.name),
+				type: f.type,
+				isNullable: f.isNullable,
+				isIdentifier: f.isIdentifier,
+				project: {
+					id: project.id,
+					name: project.name,
+				},
+			};
+
+			fieldsToSave.push(newField);
+		});
+
+		await createFields({ fields: fieldsToSave });
+		removefields();
+		removeProject();
+		router.push("/my-projects");
+	};
+
 	return (
-		<div>
-			<div className="flex p-8  space-x-2">
-				<div className="flex w-full justify-between">
-					<div className="flex w-3/6 space-x-2">
-						<div
-							className={`w-2/3 h-14 pr-8 rounded-md bg-black1 border border-solid border-transparent focus-within:border-pink`}>
-							<input
-								type="text"
-								placeholder="Digite um campo..."
-								className="w-full h-full bg-transparent placeholder-gray1 outline-none px-8 font-normal text-sm text-gray1 focus-within:text-white rounded-md"
-							/>
-						</div>
-						<button
-							type="submit"
-							className="w-1/3 cursor-pointer py-3 px-8 bg-black1 rounded-md items-center justify-center font-semibold text-white text-xs flex gap-2">
-							<ListMagnifyingGlass className="h-5 w-5 text-white" />
-							PESQUISAR
-						</button>
-					</div>
-					<div className="flex w-2/6 space-x-2 float-right">
-						<button
-							type="submit"
-							className=" w-2/5 cursor-pointer py-3 px-8 bg-black1 rounded-md items-center justify-center font-semibold text-white text-xs flex gap-2">
-							<FloppyDisk className="h-5 w-5 text-white" />
-							SALVAR
-						</button>
-						<button
-							onClick={() => handleAddField()}
-							className=" w-3/5 cursor-pointer py-3 px-8 bg-gray2 rounded-md items-center justify-center font-semibold text-white text-xs flex gap-2">
-							<Plus className="h-5 w-5 text-white" />
-							ADICIONAR CAMPO
-						</button>
-					</div>
+		<div className="p-8">
+			<header className="flex justify-between">
+				<div className="flex gap-x-2">
+					<input
+						type="text"
+						placeholder="Digite o nome de um campo"
+						className="w-[22.875rem] h-12 pr-8 bg-black1/60 border border-solid border-transparent focus-within:border-pink placeholder-gray1 outline-none px-4 font-normal text-sm
+						text-gray1 focus-within:text-white rounded-md"
+					/>
+					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
+						<ListMagnifyingGlass className="text-white h-[1.12rem] w-[1.12rem]" />
+						PESQUISAR
+					</button>
 				</div>
-			</div>
-			<div className="pl-8 pr-8 pb-8 w-full">
-				<div className="relative overflow-x-auto shadow-md sm:rounded-md border border-solid border-black1">
-					<table className="w-full text-sm text-left rtl:text-right text-white">
-						<thead className="text-xs bg-transparent">
-							<tr>
-								<th className="px-6 py-3 font-normal">Nome do campo</th>
-								<th className="px-6 py-3 font-normal">Tipo do campo</th>
-								<th className="px-6 py-3 font-normal">Identificador</th>
-								<th className="px-6 py-3 float-right text-gray1 font-normal">
-									Total de campos ({headers.length})
-								</th>
-							</tr>
-						</thead>
-						<tbody className="pl-8 pr-8">
-							{headers.map((header, key) => {
-								return <FieldCard nonSaved header={header} key={key} />;
-							})}
-						</tbody>
-					</table>
+
+				<div className="flex gap-x-2">
+					<button
+						onClick={() => handleCreateFields()}
+						className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
+						<FloppyDisk className="text-white h-[1.12rem] w-[1.12rem]" />
+						SALVAR
+					</button>
+					<button
+						onClick={() => handleAddField()}
+						className="h-12 rounded-md bg-black1 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
+						<Plus className="text-white h-[1.12rem] w-[1.12rem]" />
+						ADICIONAR CAMPO
+					</button>
+				</div>
+			</header>
+
+			<div className="rounded-md border border-solid border-black1 mt-8">
+				<header className="flex items-center justify-between px-6 py-2">
+					<div className="flex gap-x-20">
+						<p className="font-medium text-sm text-white/85 w-[7rem]">
+							Nome do campo
+						</p>
+						<p className="font-medium text-sm text-white/85 w-[6rem]">
+							Tipo do campo
+						</p>
+						<p className="font-medium text-sm text-white/85 w-[7rem]">
+							Aceita valor nulo?
+						</p>
+						<p className="font-medium text-sm text-white/85 w-[8rem]">
+							É um identificador?
+						</p>
+					</div>
+					<p className="font-medium text-xs text-gray1">
+						Total de campos ({headers.length})
+					</p>
+				</header>
+				<div className="flex-1 bg-black1 px-6">
+					{headers.map((h, i) => {
+						return (
+							<FieldCard index={i} nonSaved header={h} key={`${h}+${i}`} />
+						);
+					})}
 				</div>
 			</div>
 		</div>

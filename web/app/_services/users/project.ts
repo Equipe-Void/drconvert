@@ -27,6 +27,12 @@ interface CreateProjectRequest {
 	name: string;
 }
 
+interface UpdateProjectRequest {
+	projectId: number;
+	name: string;
+	totalFields: number;
+}
+
 export async function findAllProjects({ userId }: MyProjectsRequest) {
 	return await fetchWrapper<Project[]>(`projects/${userId}`, {
 		method: "GET",
@@ -43,6 +49,24 @@ export async function createProject({ userId, name }: CreateProjectRequest) {
 		body: JSON.stringify({
 			userId: userId,
 			name: name.toString(),
+		}),
+		headers: new Headers({
+			"content-type": "application/json",
+			Authorization: `Bearer ${Cookies.get("token")}`,
+		}),
+	});
+}
+
+export async function updateProject({
+	name,
+	projectId,
+	totalFields,
+}: UpdateProjectRequest) {
+	return await fetchWrapper<Project>(`projects/${projectId}`, {
+		method: "PUT",
+		body: JSON.stringify({
+			name: name.toString(),
+			totalFields: totalFields,
 		}),
 		headers: new Headers({
 			"content-type": "application/json",

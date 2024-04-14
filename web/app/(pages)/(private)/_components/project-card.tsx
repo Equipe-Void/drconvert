@@ -5,6 +5,7 @@ import { GearSix } from "@phosphor-icons/react";
 
 import { Project } from "@/app/_services/users/project";
 import { useProjectStore } from "@/app/_store/actual-project-store";
+import { useHeaderTitle } from "@/app/_store/header-title-store";
 
 interface ProjectCardProps {
 	project: Project;
@@ -14,6 +15,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 	const router = useRouter();
 
 	const actualProject = useProjectStore(state => state.addProject);
+	const title = useHeaderTitle(state => state.addTitle);
 
 	const getIdentifiersFields = () => {
 		let fieldsIdentifiers = [];
@@ -28,6 +30,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
 	const handleGoToProject = () => {
 		actualProject(project);
+		title(project.name);
 		router.push(`/project/${project.id}`);
 	};
 
