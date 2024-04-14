@@ -35,7 +35,7 @@ export default function MyProjects() {
 					<Dialog.Trigger>
 						<div
 							onClick={() => setOpen(true)}
-							className="bg-pink rounded-full px-3 py-3 max-w-14 cursor-pointer hover:bg-pink/80 duration-200 shadow-button">
+							className="bg-pink rounded-full px-3 py-3 max-w-14 cursor-pointer duration-200 hover:shadow-button hover:scale-110">
 							<Plus className="h-8 w-8 text-white" weight="bold" />
 						</div>
 						<UploadForm open={open} setOpen={setOpen} />

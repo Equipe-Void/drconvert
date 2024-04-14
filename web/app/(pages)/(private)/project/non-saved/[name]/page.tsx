@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
@@ -8,14 +9,13 @@ import { remove_accents } from "@/app/_functions/remove-accents";
 import { Field, createFields } from "@/app/_services/users/field";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
-import { useState } from "react";
 
 export default function NonSaved() {
 	const router = useRouter();
 
-	const [fields, removefields] = useNonSavedFieldStore(state => [
+	const [fields, removeFields] = useNonSavedFieldStore(state => [
 		state.fields,
-		state.removefields,
+		state.removeFields,
 	]);
 	const [headers, addHeaders, project, removeProject, removeHeaders] =
 		useNonSavedProjectStore(state => [
@@ -57,7 +57,7 @@ export default function NonSaved() {
 		});
 
 		await createFields({ fields: fieldsToSave });
-		removefields();
+		removeFields();
 		removeProject();
 		router.push("/my-projects");
 	};
