@@ -1,26 +1,54 @@
 "use client";
 
+import { useState } from "react";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
 import FieldCard from "../_components/field-card";
+import { AlertDialog } from "@/app/_components/alert";
+import { Field, updateField } from "@/app/_services/users/field";
 import { useProjectStore } from "@/app/_store/actual-project-store";
-import { useState } from "react";
-import { remove_accents } from "@/app/_functions/remove-accents";
-import { Field } from "@/app/_services/users/field";
-import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
+import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
+import { useRouter } from "next/navigation";
 
 export default function Project() {
+	const router = useRouter();
+
+	const [isOpen, setIsOpen] = useState(false);
 	const [filterText, setFilterText] = useState("");
+
 	const project = useProjectStore(state => state.project);
+	const useField = useNonSavedFieldStore();
 
 	const filteredItems = project.fields.filter(item =>
 		item.name.toLocaleLowerCase().includes(filterText),
 	);
 
+	const fs = [] as Omit<Field, "project">[];
+	project.fields.map(f => fs.push(f));
+	useField.fields.map(f => fs.push(f));
+
 	const fieldsToDisplay = filterText ? filteredItems : project.fields;
+
+	const handleUpdateField = () => {
+		useField.fields.map(async field => {
+			await updateField({ field });
+		});
+
+		setIsOpen(true);
+		useField.removeFields();
+		setTimeout(() => {
+			router.push("/my-projects");
+		}, 3000);
+	};
 
 	return (
 		<div className="p-8">
+			<AlertDialog
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title="Atualização dos campos"
+				message="Os campos foram atualizados com sucesso!"
+			/>
 			<header className="flex justify-between">
 				<div className="flex gap-x-2">
 					<input
@@ -38,14 +66,18 @@ export default function Project() {
 				</div>
 
 				<div className="flex gap-x-2">
-					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
+					<button
+						onClick={() => handleUpdateField()}
+						className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
 						<FloppyDisk className="text-white h-[1.12rem] w-[1.12rem]" />
 						SALVAR
 					</button>
-					<button className="h-12 rounded-md bg-black1 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
+					{/* <button
+						onClick={() => handleAddField()}
+						className="h-12 rounded-md bg-black1 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
 						<Plus className="text-white h-[1.12rem] w-[1.12rem]" />
 						ADICIONAR CAMPO
-					</button>
+					</button> */}
 				</div>
 			</header>
 

@@ -8,9 +8,11 @@ import { Check, Trash } from "@phosphor-icons/react";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
 import { fieldTypes, yesOrNot } from "@/app/_constants/field-select-values";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
+import { remove_accents } from "@/app/_functions/remove-accents";
 
 interface FieldCardProps {
 	field?: {
+		id: number;
 		name: string;
 		type: string;
 		isIdentifier: boolean;
@@ -39,7 +41,7 @@ export default function FieldCard({
 	const [isNullable, setIsNullable] = useState<Option | null>({} as Option);
 	const [isIdentifier, setIsIdentifier] = useState<Option | null>({} as Option);
 
-	const addField = useNonSavedFieldStore(state => state.addfield);
+	const addField = useNonSavedFieldStore(state => state.addField);
 	const removeHeader = useNonSavedProjectStore(state => state.removeHeaders);
 
 	const handleRemoveField = () => {
@@ -53,12 +55,26 @@ export default function FieldCard({
 	const handleEnd = () => {
 		setIsEditing(false);
 
-		if (type && isNullable && isIdentifier) {
+		if (name && type && isNullable && isIdentifier) {
 			addField({
 				name: name!,
 				type: type!.value,
 				isNullable: isNullable!.value === "true",
 				isIdentifier: isIdentifier!.value === "true",
+			});
+		}
+	};
+
+	const handleEndField = () => {
+		if (name && type && isNullable && isIdentifier) {
+			setIsEditing(false);
+
+			addField({
+				id: field!.id,
+				name: remove_accents(name),
+				type: type!.value || field!.type,
+				isNullable: isNullable!.value === "true" || field!.isNullable,
+				isIdentifier: isIdentifier!.value === "true" || field!.isIdentifier,
 			});
 		}
 	};
@@ -79,7 +95,9 @@ export default function FieldCard({
 				/>
 
 				<Select
-					defaultValue={type}
+					defaultValue={
+						(field && { value: field!.type, label: field!.type }) || type
+					}
 					onChange={setType}
 					options={fieldTypes}
 					className="rounded-md h-6 w-[6rem] bg-gray2/50 font-medium text-xs text-gray1"
@@ -88,7 +106,13 @@ export default function FieldCard({
 				/>
 
 				<Select
-					defaultValue={isNullable}
+					defaultValue={
+						(field && {
+							value: field!.isNullable.toString(),
+							label: field!.isNullable.toString(),
+						}) ||
+						isNullable
+					}
 					onChange={setIsNullable}
 					options={yesOrNot}
 					className="rounded-md h-6 w-[7rem] bg-gray2/50 font-medium text-xs text-gray1"
@@ -97,7 +121,13 @@ export default function FieldCard({
 				/>
 
 				<Select
-					defaultValue={isIdentifier}
+					defaultValue={
+						(field && {
+							value: field!.isIdentifier.toString(),
+							label: field!.isIdentifier.toString(),
+						}) ||
+						isIdentifier
+					}
 					onChange={setIsIdentifier}
 					options={yesOrNot}
 					className="rounded-md h-6 w-[8rem] bg-gray2/50 font-medium text-xs text-gray1"
@@ -106,15 +136,24 @@ export default function FieldCard({
 				/>
 			</div>
 			<div className="flex items-center gap-6 cursor-pointer">
-				<Check
-					onClick={() => handleEnd()}
-					className={`h-[1.12rem] w-[1.12rem] ${(isEditing && "text-green") || "text-gray2"} duration-150`}
-				/>
+				{(field && (
+					<Check
+						onClick={() => handleEndField()}
+						className={`h-[1.12rem] w-[1.12rem] ${(isEditing && "text-green") || "text-gray2"} duration-150`}
+					/>
+				)) || (
+					<Check
+						onClick={() => handleEnd()}
+						className={`h-[1.12rem] w-[1.12rem] ${(isEditing && "text-green") || "text-gray2"} duration-150`}
+					/>
+				)}
 
-				<Trash
-					onClick={() => handleRemoveField()}
-					className="h-[1.12rem] w-[1.12rem] text-gray2 hover:text-red duration-150"
-				/>
+				{!field && (
+					<Trash
+						onClick={() => handleRemoveField()}
+						className="h-[1.12rem] w-[1.12rem] text-gray2 hover:text-red duration-150"
+					/>
+				)}
 			</div>
 		</div>
 	);

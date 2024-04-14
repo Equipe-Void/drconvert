@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, RefAttributes, useState } from "react";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
@@ -8,9 +8,10 @@ interface InputProps extends HTMLAttributes<HTMLDivElement | HTMLInputElement> {
 	placeholder: string;
 	type: string;
 	register?: UseFormRegisterReturn<string>;
+	ref?: any;
 }
 
-const Input = ({ placeholder, type, register }: InputProps) => {
+const Input = ({ placeholder, type, register, ref }: InputProps) => {
 	const [show, setShow] = useState(false);
 
 	return (

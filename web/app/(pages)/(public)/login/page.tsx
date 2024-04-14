@@ -4,7 +4,7 @@ import Image from "next/image";
 import Cookie from "js-cookie";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check } from "@phosphor-icons/react";
 import * as Checkbox from "@radix-ui/react-checkbox";
 
@@ -21,6 +21,9 @@ interface LoginProps {
 
 export default function Login() {
 	const router = useRouter();
+
+	const ref = useRef<HTMLDivElement>(null);
+
 	const { handleSubmit, register } = useForm<LoginProps>();
 	const setUser = useUserStore(state => state.addUser);
 
@@ -87,9 +90,7 @@ export default function Login() {
 							maneira mais eficaz.
 						</p>
 						<div className="flex items-center gap-4">
-							<a
-								href=""
-								className="font-bold text-white text-sm px-6 py-3 rounded-md bg-pink hover:bg-pink/65 duration-200">
+							<a className="font-bold text-white text-sm px-6 py-3 rounded-md bg-pink hover:bg-pink/65 duration-200">
 								Entre agora
 							</a>
 							<a
