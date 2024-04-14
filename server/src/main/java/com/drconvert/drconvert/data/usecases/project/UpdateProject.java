@@ -16,7 +16,7 @@ public class UpdateProject implements UpdateProjectUseCase {
   @Autowired
   private ProjectRepository projectRepository;
 
-  public Project update(Long id, String name) {
+  public Project update(Long id, String name, Long totalFields) {
     Optional<Project> project = this.projectRepository.findById(id);
 
     if (project.isEmpty()) {
@@ -24,6 +24,7 @@ public class UpdateProject implements UpdateProjectUseCase {
     }
 
     project.get().setName(name);
+    project.get().setTotalFields(totalFields);
     this.projectRepository.save(project.get());
 
     return project.get();

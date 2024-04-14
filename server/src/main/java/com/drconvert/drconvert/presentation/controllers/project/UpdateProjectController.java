@@ -40,7 +40,7 @@ public class UpdateProjectController {
     }
 
     try {
-      Project project = updateProject.update(Long.valueOf(id), data.name());
+      Project project = updateProject.update(Long.valueOf(id), data.name(), data.totalFields());
 
       return ResponseEntity.ok().body(project);
     } catch (Exception e) {
