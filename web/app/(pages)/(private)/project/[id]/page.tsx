@@ -4,9 +4,20 @@ import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
 import FieldCard from "../_components/field-card";
 import { useProjectStore } from "@/app/_store/actual-project-store";
+import { useState } from "react";
+import { remove_accents } from "@/app/_functions/remove-accents";
+import { Field } from "@/app/_services/users/field";
+import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
 export default function Project() {
+	const [filterText, setFilterText] = useState("");
 	const project = useProjectStore(state => state.project);
+
+	const filteredItems = project.fields.filter(item =>
+		item.name.toLocaleLowerCase().includes(filterText),
+	);
+
+	const fieldsToDisplay = filterText ? filteredItems : project.fields;
 
 	return (
 		<div className="p-8">
@@ -17,8 +28,10 @@ export default function Project() {
 						placeholder="Digite o nome de um campo"
 						className="w-[22.875rem] h-12 pr-8 bg-black1/60 border border-solid border-transparent focus-within:border-pink placeholder-gray1 outline-none px-4 font-normal text-sm
 						text-gray1 focus-within:text-white rounded-md"
+						value={filterText}
+						onChange={e => setFilterText(e.target.value)}
 					/>
-					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
+					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
 						<ListMagnifyingGlass className="text-white h-[1.12rem] w-[1.12rem]" />
 						PESQUISAR
 					</button>
@@ -57,7 +70,7 @@ export default function Project() {
 					</p>
 				</header>
 				<div className="flex-1 bg-black1 px-6">
-					{project.fields.map((f, i) => {
+					{fieldsToDisplay.map((f, i) => {
 						return (
 							<FieldCard
 								index={i}

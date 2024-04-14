@@ -25,7 +25,7 @@ export default function MyProjects() {
 	}, []);
 
 	return (
-		<div className="flex-1 h-full grid grid-cols-2 gap-8 px-8 py-8">
+		<div className="flex-1 h-full grid grid-cols-2 gap-x-8 gap-y-8 px-8 py-8">
 			{projects.map(project => {
 				return <ProjectCard project={project} key={project.id} />;
 			})}

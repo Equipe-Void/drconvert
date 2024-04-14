@@ -8,6 +8,7 @@ import { remove_accents } from "@/app/_functions/remove-accents";
 import { Field, createFields } from "@/app/_services/users/field";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
+import { useState } from "react";
 
 export default function NonSaved() {
 	const router = useRouter();
@@ -24,6 +25,14 @@ export default function NonSaved() {
 			state.removeProject,
 			state.removeHeaders,
 		]);
+
+	const [filterText, setFilterText] = useState("");
+
+	const filteredItems = headers.filter(item =>
+		item.toLocaleLowerCase().includes(filterText),
+	);
+
+	const headersToDisplay = filterText ? filteredItems : headers;
 
 	const handleAddField = () => {
 		addHeaders([...headers, "Novo campo"]);
@@ -62,8 +71,10 @@ export default function NonSaved() {
 						placeholder="Digite o nome de um campo"
 						className="w-[22.875rem] h-12 pr-8 bg-black1/60 border border-solid border-transparent focus-within:border-pink placeholder-gray1 outline-none px-4 font-normal text-sm
 						text-gray1 focus-within:text-white rounded-md"
+						value={filterText}
+						onChange={e => setFilterText(e.target.value)}
 					/>
-					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
+					<button className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
 						<ListMagnifyingGlass className="text-white h-[1.12rem] w-[1.12rem]" />
 						PESQUISAR
 					</button>
@@ -106,7 +117,7 @@ export default function NonSaved() {
 					</p>
 				</header>
 				<div className="flex-1 bg-black1 px-6">
-					{headers.map((h, i) => {
+					{headersToDisplay.map((h, i) => {
 						return (
 							<FieldCard index={i} nonSaved header={h} key={`${h}+${i}`} />
 						);
