@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Cookie from "js-cookie";
+import ReactLoading from "react-loading";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import { Check } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
 
 import Input from "./_components/input";
@@ -28,11 +29,14 @@ export default function Login() {
 	const setUser = useUserStore(state => state.addUser);
 
 	const [isOpen, setIsOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);
 
 	const typesArr = ["CSV", "SQL", "YAML"];
 
 	async function handleSubmitForm(data: LoginProps) {
+		setLoading(true);
+
 		if (!data.email || !data.password) {
 			setIsOpen(true);
 		}
@@ -49,7 +53,9 @@ export default function Login() {
 
 			Cookie.set("token", response.token);
 			router.push("/my-projects");
+			setLoading(false);
 		} catch (err) {
+			setLoading(false);
 			setIsOpen(true);
 		}
 	}
@@ -161,7 +167,15 @@ export default function Login() {
 									type="submit"
 									className="w-full h-16 rounded-md bg-red text-white font-bold text-base flex items-center justify-center
                   cursor-pointer duration-200 hover:bg-red/70">
-									Entrar
+									{(loading && (
+										<ReactLoading
+											type="spin"
+											color="white"
+											height={16}
+											width={16}
+										/>
+									)) ||
+										"Entrar"}
 								</button>
 							</div>
 						</form>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ReactLoading from "react-loading";
 import { useRouter } from "next/navigation";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
@@ -27,6 +28,7 @@ export default function NonSaved() {
 		]);
 
 	const [filterText, setFilterText] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const filteredItems = headers.filter(item =>
 		item.toLocaleLowerCase().includes(filterText),
@@ -39,6 +41,7 @@ export default function NonSaved() {
 	};
 
 	const handleCreateFields = async () => {
+		setLoading(true);
 		const fieldsToSave = [] as Field[];
 
 		fields.map(f => {
@@ -60,6 +63,7 @@ export default function NonSaved() {
 		removeFields();
 		removeProject();
 		router.push("/my-projects");
+		setLoading(false);
 	};
 
 	return (
@@ -85,7 +89,10 @@ export default function NonSaved() {
 						onClick={() => handleCreateFields()}
 						className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
 						<FloppyDisk className="text-white h-[1.12rem] w-[1.12rem]" />
-						SALVAR
+						{(loading && (
+							<ReactLoading type="spin" color="white" height={14} width={14} />
+						)) ||
+							"SALVAR"}
 					</button>
 					<button
 						onClick={() => handleAddField()}

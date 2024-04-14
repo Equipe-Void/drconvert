@@ -24,6 +24,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.51.2",
+    "react-loading": "^2.0.3",
     "react-select": "^5.8.0",
     "yarn": "^1.22.22",
     "zustand": "^4.5.2"

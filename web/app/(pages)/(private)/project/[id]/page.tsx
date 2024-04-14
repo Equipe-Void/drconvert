@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ReactLoading from "react-loading";
+import { useRouter } from "next/navigation";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
 import FieldCard from "../_components/field-card";
@@ -8,16 +10,16 @@ import { AlertDialog } from "@/app/_components/alert";
 import { Field, updateField } from "@/app/_services/users/field";
 import { useProjectStore } from "@/app/_store/actual-project-store";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
-import { useRouter } from "next/navigation";
 
 export default function Project() {
 	const router = useRouter();
 
 	const [isOpen, setIsOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [filterText, setFilterText] = useState("");
 
-	const project = useProjectStore(state => state.project);
 	const useField = useNonSavedFieldStore();
+	const project = useProjectStore(state => state.project);
 
 	const filteredItems = project.fields.filter(item =>
 		item.name.toLocaleLowerCase().includes(filterText),
@@ -30,6 +32,7 @@ export default function Project() {
 	const fieldsToDisplay = filterText ? filteredItems : project.fields;
 
 	const handleUpdateField = () => {
+		setLoading(true);
 		useField.fields.map(async field => {
 			await updateField({ field });
 		});
@@ -39,6 +42,7 @@ export default function Project() {
 		setTimeout(() => {
 			router.push("/my-projects");
 		}, 3000);
+		setLoading(false);
 	};
 
 	return (
@@ -70,7 +74,10 @@ export default function Project() {
 						onClick={() => handleUpdateField()}
 						className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
 						<FloppyDisk className="text-white h-[1.12rem] w-[1.12rem]" />
-						SALVAR
+						{(loading && (
+							<ReactLoading type="spin" color="white" height={14} width={14} />
+						)) ||
+							"SALVAR"}
 					</button>
 					{/* <button
 						onClick={() => handleAddField()}

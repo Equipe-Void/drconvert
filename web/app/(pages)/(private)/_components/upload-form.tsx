@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import ReactLoading from "react-loading";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -29,10 +30,11 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 		state => [state.addHeaders, state.addProject, state.addTotalFields],
 	);
 
-	const [files, setFiles] = useState<File[] | null>(null);
-	const [separator, setSeparator] = useState("");
 	const [name, setName] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [separator, setSeparator] = useState("");
+	const [files, setFiles] = useState<File[] | null>(null);
 
 	const handleSeparator = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value.length <= 1) {
@@ -60,6 +62,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	};
 
 	const handleUpload = async () => {
+		setLoading(true);
 		if (files && separator) {
 			const project = await createProject({
 				userId: user.id,
@@ -87,6 +90,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 			router.push(
 				`/project/non-saved/${project.name.toLocaleLowerCase().split("").toString()}`,
 			);
+			setLoading(false);
 		} else {
 			setIsOpen(true);
 		}
@@ -191,7 +195,15 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 								type="submit"
 								onClick={() => handleUpload()}
 								className="cursor-pointer py-3 w-fit flex-1 bg-pink rounded-md flex items-center justify-center font-semibold text-white text-xs">
-								Enviar arquivo
+								{(loading && (
+									<ReactLoading
+										type="spin"
+										color="white"
+										height={14}
+										width={14}
+									/>
+								)) ||
+									"Criar projeto"}
 							</button>
 						</footer>
 					</Dialog.Content>
