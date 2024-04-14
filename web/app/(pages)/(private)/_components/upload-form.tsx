@@ -1,16 +1,19 @@
 "use client";
 
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
-import { useCallback, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Trash, Upload } from "@phosphor-icons/react";
+import { ChangeEvent, useCallback, useState } from "react";
 
+import { AlertDialog } from "@/app/_components/alert";
+import { useUserStore } from "@/app/_store/user-store";
 import { convertBytes } from "@/app/_functions/convert-size";
 import { uploadFile } from "@/app/_services/users/upload-file";
-import { createProject } from "@/app/_services/users/project";
-import { useUserStore } from "@/app/_store/user-store";
+import { useHeaderTitle } from "@/app/_store/header-title-store";
+import { createProject, updateProject } from "@/app/_services/users/project";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
-import { useRouter } from "next/navigation";
 
 interface UploadFormProps {
 	open?: boolean;
@@ -21,18 +24,20 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	const router = useRouter();
 
 	const user = useUserStore(state => state.user);
+	const title = useHeaderTitle(state => state.addTitle);
 	const [addHeaders, addProject, addTotalFields] = useNonSavedProjectStore(
 		state => [state.addHeaders, state.addProject, state.addTotalFields],
 	);
 
 	const [files, setFiles] = useState<File[] | null>(null);
+	const [separator, setSeparator] = useState("");
+	const [name, setName] = useState("");
+	const [isOpen, setIsOpen] = useState(false);
 
-	const removeFile = (index: number) => {
-		setFiles([...files!.slice(0, index), ...files!.slice(index + 1)]);
-	};
-
-	const removeAllFiles = () => {
-		setFiles(null);
+	const handleSeparator = (event: ChangeEvent<HTMLInputElement>) => {
+		if (event.target.value.length <= 1) {
+			setSeparator(event.target.value);
+		}
 	};
 
 	const onDrop = useCallback((files: File[]) => {
@@ -46,31 +51,55 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 		},
 	});
 
+	const removeFile = (index: number) => {
+		setFiles([...files!.slice(0, index), ...files!.slice(index + 1)]);
+	};
+
+	const removeAllFiles = () => {
+		setFiles(null);
+	};
+
 	const handleUpload = async () => {
-		if (files) {
+		if (files && separator) {
 			const project = await createProject({
 				userId: user.id,
-				name: "Projeto 2",
+				name,
 			});
 
 			const headers = await uploadFile({
-				file: files[0],
+				file: files![0],
 				projectId: project.id,
-				separator: ",",
+				separator,
+			});
+
+			await updateProject({
+				projectId: project.id,
+				name: project.name,
+				totalFields: headers.length,
 			});
 
 			addProject(project);
 			addHeaders(headers);
 			addTotalFields(headers.length);
 
+			title(project.name);
+
 			router.push(
-				`/project/non-saved/${project.name.toLocaleLowerCase().split(" ").toString()}`,
+				`/project/non-saved/${project.name.toLocaleLowerCase().split("").toString()}`,
 			);
+		} else {
+			setIsOpen(true);
 		}
 	};
 
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen} defaultOpen={false}>
+			<AlertDialog
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title="Erro ao fazer upload de arquivo"
+				message="Todos os parâmetros devem ser informados para realizar o upload do arquivo"
+			/>
 			<Dialog.Portal>
 				<Dialog.Overlay className="bg-black0/90 inset-0 fixed overflow-y-auto grid place-items-center p-8">
 					<Dialog.Content className="bg-black1 text-black2 min-w-[28.813rem] h-auto shadow-lg shadow-black0/25 rounded-xl">
@@ -100,6 +129,30 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 									Apenas formato de arquivo .csv
 								</p>
 							</div>
+						</div>
+
+						<div className="flex gap-4 w-full mt-4 px-8 flex-col">
+							<input
+								type="text"
+								className={clsx(
+									"w-full text-xs py-3 rounded-md outline-none border-0 bg-gray2",
+									"focus-within:text-white text-gray1 px-4 placeholder-gray1",
+								)}
+								placeholder="Defina um nome para o projeto"
+								value={name}
+								onChange={e => setName(e.target.value)}
+							/>
+							<input
+								type="text"
+								className={clsx(
+									"w-full text-xs py-3 rounded-md outline-none border-0 bg-gray2",
+									"focus-within:text-white text-gray1 px-4 placeholder-gray1",
+								)}
+								placeholder="Especifique o separador"
+								maxLength={1}
+								value={separator}
+								onChange={handleSeparator}
+							/>
 						</div>
 
 						<div className="text-white text-xs font-semibold flex flex-col gap-3 px-8 py-8">
