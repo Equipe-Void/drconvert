@@ -60,7 +60,7 @@
     </tr>
     <tr>
       <td>Eu, como Administrador/Cliente, desejo Realizar o login no sistema, para que eu possa Acessar as funcionalidades do sistema</td>
-      <td>O login deve será feito com um email e senha válidos, direcionando o usuário à tela "meus projetos</td>
+      <td>O login deve será feito com um email e senha válidos, direcionando o usuário à tela meus projetos</td>
       <td>7</td>
       <td>1</td>
       <td>1ª</td>
