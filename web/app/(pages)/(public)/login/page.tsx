@@ -11,8 +11,8 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import Input from "./_components/input";
 import logo from "@/public/images/logo.svg";
 import { login } from "@/app/_services/users/login";
+import { AlertDialog } from "@/app/_components/alert";
 import { useUserStore } from "@/app/_store/user-store";
-import Popup from "@/app/_components/popup";
 
 interface LoginProps {
 	email: string;
@@ -24,27 +24,31 @@ export default function Login() {
 	const { handleSubmit, register } = useForm<LoginProps>();
 	const setUser = useUserStore(state => state.addUser);
 
-	const [open, setOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);
 
 	const typesArr = ["CSV", "SQL", "YAML"];
 
 	async function handleSubmitForm(data: LoginProps) {
 		if (!data.email || !data.password) {
-			setOpen(true);
+			setIsOpen(true);
 		}
 
-		const response = await login(data);
+		try {
+			const response = await login(data);
 
-		setUser(response.user);
+			setUser(response.user);
 
-		if (rememberMe) {
-			const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
-			Cookie.set("token", response.token, { expires: hours });
+			if (rememberMe) {
+				const hours = new Date(new Date().getTime() + 115 * 60 * 1000);
+				Cookie.set("token", response.token, { expires: hours });
+			}
+
+			Cookie.set("token", response.token);
+			router.push("/my-projects");
+		} catch (err) {
+			setIsOpen(true);
 		}
-
-		Cookie.set("token", response.token);
-		router.push("/my-projects");
 	}
 
 	useEffect(() => {
@@ -55,7 +59,12 @@ export default function Login() {
 
 	return (
 		<div className="w-full h-screen overflow-hidden">
-			<Popup open={open} setOpen={setOpen} />
+			<AlertDialog
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title="Erro ao tentar fazer login"
+				message="Um e-mail e uma senha válida devem ser informados."
+			/>
 			<div className="px-4">
 				<Image src={logo} alt="DrConvert logo" />
 			</div>
