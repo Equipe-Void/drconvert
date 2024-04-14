@@ -4,15 +4,15 @@ import { Field } from "../_services/users/field";
 
 interface FieldStore {
 	fields: Omit<Field, "project">[];
-	addfield: (field: Omit<Field, "project">) => void;
-	removefields: () => void;
+	addField: (field: Omit<Field, "project">) => void;
+	removeFields: () => void;
 }
 
 export const useNonSavedFieldStore = create<FieldStore>(set => ({
 	fields: [] as Field[],
-	addfield: field =>
+	addField: field =>
 		set(state => ({
 			fields: [...state.fields, field],
 		})),
-	removefields: () => set({ fields: [] as Field[] }),
+	removeFields: () => set({ fields: [] as Field[] }),
 }));
