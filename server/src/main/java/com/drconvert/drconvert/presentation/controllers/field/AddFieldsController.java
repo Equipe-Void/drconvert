@@ -17,10 +17,11 @@ import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
 import com.drconvert.drconvert.presentation.dto.AddFieldsRequestDTO;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class AddFieldsController {

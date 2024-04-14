@@ -12,6 +12,9 @@ INSERT INTO roles (role) VALUES ("CREATE_USER");
 INSERT INTO field (name, type, project_id, is_nullable, is_identifier) VALUES ("field1", "string", 1, true, true);
 INSERT INTO field (name, type, project_id, is_nullable, is_identifier) VALUES ("field2", "int", 1, false, false);
 
-INSERT INTO users_roles (roles_id, user_id) VALUES (6, 1);
 INSERT INTO users_roles (roles_id, user_id) VALUES (1, 1);
 INSERT INTO users_roles (roles_id, user_id) VALUES (2, 1);
+INSERT INTO users_roles (roles_id, user_id) VALUES (3, 1);
+INSERT INTO users_roles (roles_id, user_id) VALUES (4, 1);
+INSERT INTO users_roles (roles_id, user_id) VALUES (5, 1);
+INSERT INTO users_roles (roles_id, user_id) VALUES (6, 1);

@@ -1,6 +1,8 @@
 package com.drconvert.drconvert.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +37,7 @@ public class Field {
   private Boolean isNullable;
 
   @ManyToOne
-  @JsonIgnore
+  @JsonProperty(access = Access.WRITE_ONLY)
   @JoinColumn(name = "project_id", nullable = false)
   private Project project;
 

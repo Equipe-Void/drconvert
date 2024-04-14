@@ -3,6 +3,7 @@ package com.drconvert.drconvert.presentation.controllers.field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.drconvert.drconvert.presentation.dto.AddFieldRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class AddFieldController {
