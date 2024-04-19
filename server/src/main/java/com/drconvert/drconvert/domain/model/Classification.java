@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Field {
+public class Classification {
   @EqualsAndHashCode.Include
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +26,9 @@ public class Field {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "type", nullable = false)
-  private String type;
-
-  @Column(name = "is_identifier", nullable = false)
-  private Boolean isIdentifier;
-
-  @Column(name = "is_nullable", nullable = false)
-  private Boolean isNullable;
-
   @ManyToOne
   @JsonProperty(access = Access.WRITE_ONLY)
-  @JoinColumn(name = "project_id", nullable = false)
-  private Project project;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
 }
