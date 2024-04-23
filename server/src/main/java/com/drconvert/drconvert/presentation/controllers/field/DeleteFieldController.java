@@ -3,7 +3,6 @@ package com.drconvert.drconvert.presentation.controllers.field;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +31,7 @@ public class DeleteFieldController {
   public ResponseEntity<Void> deleteField(@PathVariable Long fieldId) {
     Optional<Field> fieldExists = this.findFieldById.find(Long.valueOf(fieldId));
 
-    if(!fieldExists.isPresent()) {
+    if (!fieldExists.isPresent()) {
       throw new FieldNotFoundException();
     }
 

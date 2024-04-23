@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.domain.usecases.admin.AddUserUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByEmailUseCase;
-import com.drconvert.drconvert.presentation.dto.AddUserRequestDTO;
+import com.drconvert.drconvert.presentation.dto.user.AddUserRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserAlreadyExistsException;
 
@@ -38,7 +38,7 @@ public class AddUserController {
   public ResponseEntity<?> addUser(@RequestBody @Validated AddUserRequestDTO data) {
     Optional<User> userExists = this.findUserByEmail.find(data.email());
 
-    if(userExists.isPresent()) {
+    if (userExists.isPresent()) {
       throw new UserAlreadyExistsException();
     }
 
@@ -55,5 +55,5 @@ public class AddUserController {
       throw new BadRequestException("Erro ao criar este usuário");
     }
   }
-  
+
 }

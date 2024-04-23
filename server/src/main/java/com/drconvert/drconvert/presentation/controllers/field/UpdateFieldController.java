@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.usecases.field.UpdateFieldUseCase;
 import com.drconvert.drconvert.domain.usecases.field.FindFieldByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.UpdateFieldRequestDTO;
+import com.drconvert.drconvert.presentation.dto.field.UpdateFieldRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.FieldNotFoundException;
 
@@ -33,7 +33,7 @@ public class UpdateFieldController {
   public ResponseEntity<Field> updateField(@PathVariable Long id, @RequestBody UpdateFieldRequestDTO data) {
     Optional<Field> fieldExists = this.findFieldById.find(Long.valueOf(id));
 
-    if(!fieldExists.isPresent()) {
+    if (!fieldExists.isPresent()) {
       throw new FieldNotFoundException();
     }
 

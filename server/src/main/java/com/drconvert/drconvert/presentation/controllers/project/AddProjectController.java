@@ -15,7 +15,7 @@ import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.domain.usecases.project.AddProjectUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.AddProjectRequestDTO;
+import com.drconvert.drconvert.presentation.dto.project.AddProjectRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
@@ -23,7 +23,7 @@ import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 @RestController
 @RequestMapping("/api")
 public class AddProjectController {
-  
+
   @Autowired
   private AddProjectUseCase addProject;
 
@@ -34,7 +34,7 @@ public class AddProjectController {
   public ResponseEntity<Project> addProject(@RequestBody @Validated AddProjectRequestDTO data) {
     Optional<User> userExists = this.findUserById.find(Long.valueOf(data.userId()));
 
-    if(!userExists.isPresent()) {
+    if (!userExists.isPresent()) {
       throw new UserNotFoundException();
     }
 

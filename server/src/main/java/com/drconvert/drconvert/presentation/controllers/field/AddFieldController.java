@@ -13,7 +13,7 @@ import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.field.AddFieldUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.AddFieldRequestDTO;
+import com.drconvert.drconvert.presentation.dto.field.AddFieldRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
@@ -21,7 +21,7 @@ import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 @RestController
 @RequestMapping("/api")
 public class AddFieldController {
-  
+
   @Autowired
   private AddFieldUseCase addField;
 
@@ -33,7 +33,7 @@ public class AddFieldController {
     Field field = data.field();
 
     Project project = findProjectById.find(Long.valueOf(field.getProject().getId()))
-      .orElseThrow(ProjectNotFoundException::new);
+        .orElseThrow(ProjectNotFoundException::new);
 
     try {
       Field newField = new Field();
@@ -42,7 +42,7 @@ public class AddFieldController {
       newField.setType(field.getType());
       newField.setIsIdentifier(field.getIsIdentifier());
       newField.setIsNullable(field.getIsNullable());
-      
+
       Field addedField = this.addField.add(newField);
 
       return ResponseEntity.status(201).body(addedField);
