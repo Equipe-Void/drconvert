@@ -5,69 +5,54 @@ import ReactLoading from "react-loading";
 import { useRouter } from "next/navigation";
 import { FloppyDisk, ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
 
-import FieldCard from "../../_components/field-card";
-import { remove_accents } from "@/app/_functions/remove-accents";
-import { Field, createFields } from "@/app/_services/users/field";
+import FieldCard from "../_components/field-card";
+import { AlertDialog } from "@/app/_components/alert";
+import { Field, updateField } from "@/app/_services/users/field";
+import { useProjectStore } from "@/app/_store/actual-project-store";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
-import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
-export default function NonSaved() {
+export default function B() {
 	const router = useRouter();
 
-	const [fields, removeFields] = useNonSavedFieldStore(state => [
-		state.fields,
-		state.removeFields,
-	]);
-	const [headers, addHeaders, project, removeProject, removeHeaders] =
-		useNonSavedProjectStore(state => [
-			state.headers,
-			state.addHeaders,
-			state.project,
-			state.removeProject,
-			state.removeHeaders,
-		]);
-
-	const [filterText, setFilterText] = useState("");
+	const [isOpen, setIsOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [filterText, setFilterText] = useState("");
 
-	const filteredItems = headers.filter(item =>
-		item.toLocaleLowerCase().includes(filterText),
+	const useField = useNonSavedFieldStore();
+	const project = useProjectStore(state => state.project);
+
+	const filteredItems = project.fields.filter(item =>
+		item.name.toLocaleLowerCase().includes(filterText),
 	);
 
-	const headersToDisplay = filterText ? filteredItems : headers;
+	const fs = [] as Omit<Field, "project">[];
+	project.fields.map(f => fs.push(f));
+	useField.fields.map(f => fs.push(f));
 
-	const handleAddField = () => {
-		addHeaders([...headers, "Novo campo"]);
-	};
+	const fieldsToDisplay = filterText ? filteredItems : project.fields;
 
-	const handleCreateFields = async () => {
+	const handleUpdateField = () => {
 		setLoading(true);
-		const fieldsToSave = [] as Field[];
-
-		fields.map(f => {
-			const newField: Field = {
-				name: remove_accents(f.name),
-				type: f.type,
-				isNullable: f.isNullable,
-				isIdentifier: f.isIdentifier,
-				project: {
-					id: project.id,
-					name: project.name,
-				},
-			};
-
-			fieldsToSave.push(newField);
+		useField.fields.map(async field => {
+			await updateField({ field });
 		});
 
-		await createFields({ fields: fieldsToSave });
-		removeFields();
-		removeProject();
-		router.push("/my-projects");
+		setIsOpen(true);
+		useField.removeFields();
+		setTimeout(() => {
+			router.push("/my-projects");
+		}, 3000);
 		setLoading(false);
 	};
 
 	return (
 		<div className="p-8">
+			<AlertDialog
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				title="Atualização dos campos"
+				message="Os campos foram atualizados com sucesso!"
+			/>
 			<header className="flex justify-between">
 				<div className="flex gap-x-2">
 					<input
@@ -86,7 +71,7 @@ export default function NonSaved() {
 
 				<div className="flex gap-x-2">
 					<button
-						onClick={() => handleCreateFields()}
+						onClick={() => handleUpdateField()}
 						className="h-12 rounded-md bg-black1/60 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4 hover:bg-black1 duration-200">
 						<FloppyDisk className="text-white h-[1.12rem] w-[1.12rem]" />
 						{(loading && (
@@ -94,12 +79,12 @@ export default function NonSaved() {
 						)) ||
 							"SALVAR"}
 					</button>
-					<button
+					{/* <button
 						onClick={() => handleAddField()}
 						className="h-12 rounded-md bg-black1 font-extrabold text-xs text-white flex gap-2 items-center justify-center px-4">
 						<Plus className="text-white h-[1.12rem] w-[1.12rem]" />
 						ADICIONAR CAMPO
-					</button>
+					</button> */}
 				</div>
 			</header>
 
@@ -115,15 +100,23 @@ export default function NonSaved() {
 						<p className="font-medium text-sm text-white/85 w-[7rem]">
 							Aceita valor nulo?
 						</p>
+						<p className="font-medium text-sm text-white/85 w-[8rem]">
+							É um identificador?
+						</p>
 					</div>
 					<p className="font-medium text-xs text-gray1">
-						Total de campos ({headers.length})
+						Total de campos ({project.fields.length})
 					</p>
 				</header>
 				<div className="flex-1 bg-black1 px-6">
-					{headersToDisplay.map((h, i) => {
+					{fieldsToDisplay.map((f, i) => {
 						return (
-							<FieldCard index={i} nonSaved header={h} key={`${h}+${i}`} />
+							<FieldCard
+								index={i}
+								nonSaved={false}
+								field={f}
+								key={`${f.id}+${i}`}
+							/>
 						);
 					})}
 				</div>
