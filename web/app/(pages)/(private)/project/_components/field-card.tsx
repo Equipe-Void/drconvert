@@ -62,7 +62,7 @@ export default function FieldCard({
 				name: name!,
 				type: type!.value,
 				isNullable: isNullable!.value === "true",
-				isIdentifier: false,
+				isIdentifier: isIdentifier.value === "true" || false,
 			});
 		}
 	};
