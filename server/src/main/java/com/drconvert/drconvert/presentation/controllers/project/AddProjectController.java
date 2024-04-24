@@ -39,12 +39,8 @@ public class AddProjectController {
     }
 
     try {
-      Project project = new Project();
-      project.setName(data.name());
-      project.setUser(userExists.get());
-      project.setTotalFields(data.totalFields());
 
-      Project newProject = this.addProject.add(project);
+      Project newProject = this.addProject.add(data, userExists.get());
 
       return ResponseEntity.status(201).body(newProject);
     } catch (Exception e) {

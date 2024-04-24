@@ -14,6 +14,7 @@ import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.field.AddFieldUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
+import com.drconvert.drconvert.presentation.dto.field.AddFieldRequestDTO;
 import com.drconvert.drconvert.presentation.dto.field.AddFieldsRequestDTO;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
@@ -43,14 +44,7 @@ public class AddFieldsController {
         throw new ProjectNotFoundException();
       }
 
-      Field field = new Field();
-      field.setName(f.getName());
-      field.setProject(projectExists.get());
-      field.setType(f.getType());
-      field.setIsIdentifier(f.getIsIdentifier());
-      field.setIsNullable(f.getIsNullable());
-
-      fields.add(this.addField.add(field));
+      fields.add(this.addField.add(new AddFieldRequestDTO(f), projectExists.get()));
     }
 
     return ResponseEntity.status(201).body(fields);

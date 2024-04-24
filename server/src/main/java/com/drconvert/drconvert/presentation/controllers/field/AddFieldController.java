@@ -36,14 +36,7 @@ public class AddFieldController {
         .orElseThrow(ProjectNotFoundException::new);
 
     try {
-      Field newField = new Field();
-      newField.setName(field.getName());
-      newField.setProject(project);
-      newField.setType(field.getType());
-      newField.setIsIdentifier(field.getIsIdentifier());
-      newField.setIsNullable(field.getIsNullable());
-
-      Field addedField = this.addField.add(newField);
+      Field addedField = this.addField.add(data, project);
 
       return ResponseEntity.status(201).body(addedField);
     } catch (Exception e) {

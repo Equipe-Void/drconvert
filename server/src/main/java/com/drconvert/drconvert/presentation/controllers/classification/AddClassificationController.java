@@ -41,11 +41,7 @@ public class AddClassificationController {
     }
 
     try {
-      Classification classification = new Classification();
-      classification.setName(data.name());
-      classification.setUser(userExists.get());
-
-      Classification newClassification = this.addClassification.add(classification);
+      Classification newClassification = this.addClassification.add(data, userExists.get());
 
       return ResponseEntity.status(201).body(newClassification);
     } catch (Exception e) {

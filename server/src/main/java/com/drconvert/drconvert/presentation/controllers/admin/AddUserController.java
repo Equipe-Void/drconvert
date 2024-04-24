@@ -16,7 +16,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api/admin")
 public class AddUserController {
-
-  @Autowired
-  private PasswordEncoder passwordEncoder;
 
   @Autowired
   private AddUserUseCase addUser;
@@ -43,12 +39,7 @@ public class AddUserController {
     }
 
     try {
-      User user = new User();
-      user.setEmail(data.email());
-      user.setPassword(passwordEncoder.encode(data.password()));
-      user.setName(data.name());
-      user.setRoles(data.roles());
-      User createdUser = this.addUser.add(user);
+      User createdUser = this.addUser.add(data);
 
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     } catch (Exception e) {
