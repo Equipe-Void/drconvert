@@ -14,7 +14,7 @@ import com.drconvert.drconvert.domain.model.Classification;
 import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.domain.usecases.classification.AddClassificationUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.AddClassificationRequestDTO;
+import com.drconvert.drconvert.presentation.dto.classification.AddClassificationRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
@@ -41,11 +41,7 @@ public class AddClassificationController {
     }
 
     try {
-      Classification classification = new Classification();
-      classification.setName(data.name());
-      classification.setUser(userExists.get());
-
-      Classification newClassification = this.addClassification.add(classification);
+      Classification newClassification = this.addClassification.add(data, userExists.get());
 
       return ResponseEntity.status(201).body(newClassification);
     } catch (Exception e) {

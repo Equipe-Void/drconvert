@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.usecases.field.UpdateFieldUseCase;
 import com.drconvert.drconvert.infra.repositories.FieldRepository;
-import com.drconvert.drconvert.presentation.dto.UpdateFieldRequestDTO;
+import com.drconvert.drconvert.presentation.dto.field.UpdateFieldRequestDTO;
 
 @Service
 public class UpdateField implements UpdateFieldUseCase {

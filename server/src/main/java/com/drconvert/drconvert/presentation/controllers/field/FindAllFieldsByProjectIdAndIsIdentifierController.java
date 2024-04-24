@@ -14,7 +14,7 @@ import com.drconvert.drconvert.domain.model.Field;
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.field.FindAllFieldsByProjectIdAndByIsIdentifierUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
-import com.drconvert.drconvert.presentation.dto.FindAllFieldsByProjectIdAndIsIdentifierRequestDTO;
+import com.drconvert.drconvert.presentation.dto.field.FindAllFieldsByProjectIdAndIsIdentifierRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api")
 public class FindAllFieldsByProjectIdAndIsIdentifierController {
-  
+
   @Autowired
   private FindAllFieldsByProjectIdAndByIsIdentifierUseCase findAllFields;
 
@@ -32,10 +32,11 @@ public class FindAllFieldsByProjectIdAndIsIdentifierController {
   private FindProjectByIdUseCase findProjectById;
 
   @GetMapping("/fields")
-  public ResponseEntity<List<Field>> findAll(@RequestBody @Validated FindAllFieldsByProjectIdAndIsIdentifierRequestDTO data) {
+  public ResponseEntity<List<Field>> findAll(
+      @RequestBody @Validated FindAllFieldsByProjectIdAndIsIdentifierRequestDTO data) {
     Optional<Project> projectExists = this.findProjectById.find(Long.valueOf(data.projectId()));
 
-    if(!projectExists.isPresent()) {
+    if (!projectExists.isPresent()) {
       throw new ProjectNotFoundException();
     }
 
@@ -47,5 +48,5 @@ public class FindAllFieldsByProjectIdAndIsIdentifierController {
       throw new BadRequestException("Erro ao tentar buscar os campos do projeto;");
     }
   }
-  
+
 }

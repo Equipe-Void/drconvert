@@ -40,12 +40,7 @@ public class AddFromToController {
     }
 
     try {
-      FromTo fromTo = new FromTo();
-      fromTo.setInput(data.input());
-      fromTo.setOutput(data.output());
-      fromTo.setClassification(classificationExist.get());
-
-      FromTo newFromTo = this.addFromTo.add(fromTo);
+      FromTo newFromTo = this.addFromTo.add(data, classificationExist.get());
 
       return ResponseEntity.status(201).body(newFromTo);
 
