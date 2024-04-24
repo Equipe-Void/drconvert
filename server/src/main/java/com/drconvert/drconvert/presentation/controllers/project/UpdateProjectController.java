@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
 import com.drconvert.drconvert.domain.usecases.project.UpdateProjectUseCase;
-import com.drconvert.drconvert.presentation.dto.UpdateProjectRequestDTO;
+import com.drconvert.drconvert.presentation.dto.project.UpdateProjectRequestDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 
@@ -35,7 +35,7 @@ public class UpdateProjectController {
   public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody @Validated UpdateProjectRequestDTO data) {
     Optional<Project> projectExists = this.findProjectById.find(Long.valueOf(id));
 
-    if(!projectExists.isPresent()) {
+    if (!projectExists.isPresent()) {
       throw new ProjectNotFoundException();
     }
 

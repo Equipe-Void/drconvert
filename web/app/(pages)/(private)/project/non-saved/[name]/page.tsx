@@ -115,9 +115,6 @@ export default function NonSaved() {
 						<p className="font-medium text-sm text-white/85 w-[7rem]">
 							Aceita valor nulo?
 						</p>
-						<p className="font-medium text-sm text-white/85 w-[8rem]">
-							É um identificador?
-						</p>
 					</div>
 					<p className="font-medium text-xs text-gray1">
 						Total de campos ({headers.length})

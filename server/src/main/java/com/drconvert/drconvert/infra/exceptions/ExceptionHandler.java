@@ -7,6 +7,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.FieldNotFoundException;
+import com.drconvert.drconvert.presentation.errors.NotFoundException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
 import com.drconvert.drconvert.presentation.errors.UserAlreadyExistsException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
@@ -36,6 +37,11 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
   @org.springframework.web.bind.annotation.ExceptionHandler(FieldNotFoundException.class)
   private ResponseEntity<String> fieldNotFound(FieldNotFoundException exception) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+  }
+
+  @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
+  private ResponseEntity<String> notFound(NotFoundException exception) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
   }
 

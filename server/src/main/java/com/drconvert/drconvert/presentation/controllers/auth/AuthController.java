@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.drconvert.drconvert.data.usecases.user.FindUserByEmail;
 import com.drconvert.drconvert.domain.model.User;
 import com.drconvert.drconvert.infra.security.TokenService;
-import com.drconvert.drconvert.presentation.dto.AuthResponseDTO;
-import com.drconvert.drconvert.presentation.dto.AuthenticationDTO;
+import com.drconvert.drconvert.presentation.dto.user.AuthResponseDTO;
+import com.drconvert.drconvert.presentation.dto.user.AuthenticationDTO;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
 
@@ -32,11 +32,11 @@ public class AuthController {
   private PasswordEncoder passwordEncoder;
 
   @PostMapping("/auth")
-  public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthenticationDTO body){
+  public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthenticationDTO body) {
     User user = this.findUserByEmail.find(body.email()).orElseThrow(UserNotFoundException::new);
 
     try {
-      if(passwordEncoder.matches(body.password(), user.getPassword())) {
+      if (passwordEncoder.matches(body.password(), user.getPassword())) {
         String token = this.tokenService.generateToken(user);
         return ResponseEntity.ok(new AuthResponseDTO(token, user));
       }
@@ -45,5 +45,5 @@ public class AuthController {
       throw new BadRequestException("Erro ao autenticar este usuário");
     }
   }
-  
+
 }
