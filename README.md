@@ -163,8 +163,6 @@ Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina 
 
 `Iniciar o backend em modo de desenvolvimento`
 
-`na pasta principal do projeto (drconvert), executar:`
-
 ```
   $ git clone https://github.com/equipe-void/drconvert.git
   $ cd drconvert
