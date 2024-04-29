@@ -29,4 +29,7 @@ public class File {
 
   @Column(name = "file_path", nullable = false)
   private String filePath;
+
+  @Column(name = "has_header", nullable = false)
+  private Boolean hasHeader;
 }
