@@ -8,16 +8,16 @@ import { useDropzone } from "react-dropzone";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Trash, Upload } from "@phosphor-icons/react";
 import { ChangeEvent, useCallback, useState } from "react";
-import { fieldTypes, yesOrNot } from "@/app/_constants/field-select-values";
 
 import { AlertDialog } from "@/app/_components/alert";
 import { useUserStore } from "@/app/_store/user-store";
+import { Option } from "../project/_components/field-card";
 import { convertBytes } from "@/app/_functions/convert-size";
 import { uploadFile } from "@/app/_services/users/upload-file";
+import { yesOrNot } from "@/app/_constants/field-select-values";
 import { useHeaderTitle } from "@/app/_store/header-title-store";
 import { createProject, updateProject } from "@/app/_services/users/project";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
-import { Option } from "../project/_components/field-card";
 
 interface UploadFormProps {
 	open?: boolean;
@@ -39,7 +39,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	const [separator, setSeparator] = useState("");
 	const [files, setFiles] = useState<File[] | null>(null);
 	const [hasHeader, setHasHeader] = useState<Option | null>({} as Option);
-	
+
 	const handleSeparator = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value.length <= 1) {
 			setSeparator(event.target.value);
@@ -98,6 +98,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 			setLoading(false);
 		} else {
 			setIsOpen(true);
+			setLoading(false);
 		}
 	};
 
@@ -144,8 +145,9 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 							<input
 								type="text"
 								className={clsx(
-									"w-full text-xs py-3 rounded-md outline-none border-0 bg-gray2",
+									"w-full text-xs py-3 rounded-md outline-none bg-gray2",
 									"focus-within:text-white text-gray1 px-4 placeholder-gray1",
+									"border border-solid border-transparent focus-within:border-pink",
 								)}
 								placeholder="Defina um nome para o projeto"
 								value={name}
@@ -155,8 +157,9 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 								<input
 									type="text"
 									className={clsx(
-										"w-1/2 text-xs py-3 rounded-md outline-none border-0 bg-gray2",
-										"focus-within:text-white text-gray1 px-4 placeholder-gray1",
+										"w-1/2 text-xs py-3 rounded-md outline-none bg-gray2",
+										"focus-within:text-white  text-gray1 px-4 placeholder-gray1",
+										"border border-solid border-transparent focus-within:border-pink",
 									)}
 									placeholder="Especifique o separador"
 									maxLength={1}
@@ -166,7 +169,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 								<Select
 									options={yesOrNot}
 									className="rounded-md w-1/2 bg-gray2 font-medium text-xs text-gray1"
-									placeholder="Tem header?"
+									placeholder="Possui cabeçalho?"
 									unstyled
 									styles={customStyles}
 									onChange={setHasHeader}

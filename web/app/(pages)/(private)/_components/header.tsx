@@ -24,7 +24,9 @@ export default function Header() {
 						? "Meus Projetos"
 						: pathname === "/settings"
 							? "Configurações"
-							: title}
+							: pathname === "/classifications"
+								? "Classificações"
+								: title}
 				</h1>
 				{(pathname.includes("/project/") ||
 					pathname.includes("/non-saved/")) && (
