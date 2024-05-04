@@ -1,9 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { ListMagnifyingGlass, Plus } from "@phosphor-icons/react";
+
 import ClassificationCard from "./_components/classification-card";
+import { ClassificationForm } from "./_components/classification-form";
+import { useClassificationFormStateStore } from "@/app/_store/classification-form-store";
 
 export default function NonSaved() {
+	const useClassificationFormState = useClassificationFormStateStore();
+
 	return (
 		<div className="p-8">
 			<header className="flex justify-between">
@@ -52,6 +59,22 @@ export default function NonSaved() {
 						return <ClassificationCard index={i} />;
 					})}
 				</div>
+			</div>
+
+			<div className="absolute right-8 bottom-8">
+				<Dialog.Root>
+					<Dialog.Trigger>
+						<div
+							onClick={() => useClassificationFormState.addOpen(true)}
+							className="bg-pink rounded-full px-3 py-3 max-w-14 cursor-pointer duration-200 hover:shadow-button hover:scale-110">
+							<Plus className="h-8 w-8 text-white" weight="bold" />
+						</div>
+						<ClassificationForm
+							open={useClassificationFormState.open}
+							setOpen={useClassificationFormState.addOpen}
+						/>
+					</Dialog.Trigger>
+				</Dialog.Root>
 			</div>
 		</div>
 	);
