@@ -1,6 +1,6 @@
 # Sistema de conversão e análise de dados: DrConvert
 
-<img src ="https://img.shields.io/static/v1?label=status&message=%20in progress&color=red&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=sprint%20atual&message=%20primeira%20sprint&color=yellow&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=cliente&message=%20Dom%20Rock%20&color=blue&style=%3CSTYLE%3E&logo=%3CLOGO%3E">
+<img src ="https://img.shields.io/static/v1?label=status&message=%20em progresso&color=red&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=sprint%20atual&message=%20segunda%20sprint&color=yellow&style=%3CSTYLE%3E&logo=%3CLOGO%3E"> <img src = "https://img.shields.io/static/v1?label=cliente&message=%20Dom%20Rock%20&color=blue&style=%3CSTYLE%3E&logo=%3CLOGO%3E">
 
 <br>
 
@@ -164,6 +164,7 @@ Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina 
 `Iniciar o backend em modo de desenvolvimento`
 
 ```
+  $ git clone https://github.com/equipe-void/drconvert.git
   $ cd drconvert
   $ cd server
   $ mvn spring-boot:run
@@ -178,12 +179,14 @@ Para clonar e rodar a aplicação, é necessário ter instalado em sua máquina 
 
 `Iniciar o frontend em modo de desenvolvimento`
 
+`na pasta principal do projeto (drconvert), executar:`
+
 ```
-  $ git clone https://github.com/equipe-void/drconvert.git
-  $ cd drconvert
   $ cd web
   $ npm install ou yarn install
   $ npm run dev ou yarn run dev
 ```
 
 `O projeto deve iniciar em http://localhost:3000`
+
+> _Wireframe de alta fidelidade_ - [Wireframe Figma](https://www.figma.com/proto/dwFzK8Id4Ae014ZAoK5Hl6/drconvert?type=design&node-id=176-2&t=qRggNmCuwjykSuSh-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=6%3A53&mode=design)

@@ -36,6 +36,10 @@ public class Field {
   private Boolean isNullable;
 
   @ManyToOne
+  @JoinColumn(name = "classification_id")
+  private Classification classification;
+
+  @ManyToOne
   @JsonProperty(access = Access.WRITE_ONLY)
   @JoinColumn(name = "project_id", nullable = false)
   private Project project;

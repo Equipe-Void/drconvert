@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import logo from "@/public/images/logo.svg";
+import { ArrowRight } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { useHeaderTitle } from "@/app/_store/header-title-store";
-import { ArrowRight, X } from "@phosphor-icons/react";
 
 export default function Header() {
 	const router = useRouter();
@@ -24,7 +24,9 @@ export default function Header() {
 						? "Meus Projetos"
 						: pathname === "/settings"
 							? "Configurações"
-							: title}
+							: pathname === "/classifications"
+								? "Classificações"
+								: title}
 				</h1>
 				{(pathname.includes("/project/") ||
 					pathname.includes("/non-saved/")) && (

@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import Select from "react-select";
 import ReactLoading from "react-loading";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
@@ -10,8 +11,10 @@ import { ChangeEvent, useCallback, useState } from "react";
 
 import { AlertDialog } from "@/app/_components/alert";
 import { useUserStore } from "@/app/_store/user-store";
+import { Option } from "../project/_components/field-card";
 import { convertBytes } from "@/app/_functions/convert-size";
 import { uploadFile } from "@/app/_services/users/upload-file";
+import { yesOrNot } from "@/app/_constants/field-select-values";
 import { useHeaderTitle } from "@/app/_store/header-title-store";
 import { createProject, updateProject } from "@/app/_services/users/project";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
@@ -35,6 +38,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 	const [loading, setLoading] = useState(false);
 	const [separator, setSeparator] = useState("");
 	const [files, setFiles] = useState<File[] | null>(null);
+	const [hasHeader, setHasHeader] = useState<Option | null>({} as Option);
 
 	const handleSeparator = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value.length <= 1) {
@@ -63,7 +67,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 
 	const handleUpload = async () => {
 		setLoading(true);
-		if (files && separator) {
+		if (files && separator && hasHeader?.label) {
 			const project = await createProject({
 				userId: user.id,
 				name,
@@ -73,6 +77,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 				file: files![0],
 				projectId: project.id,
 				separator,
+				hasHeader,
 			});
 
 			await updateProject({
@@ -93,6 +98,7 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 			setLoading(false);
 		} else {
 			setIsOpen(true);
+			setLoading(false);
 		}
 	};
 
@@ -139,24 +145,36 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 							<input
 								type="text"
 								className={clsx(
-									"w-full text-xs py-3 rounded-md outline-none border-0 bg-gray2",
+									"w-full text-xs py-3 rounded-md outline-none bg-gray2",
 									"focus-within:text-white text-gray1 px-4 placeholder-gray1",
+									"border border-solid border-transparent focus-within:border-pink",
 								)}
 								placeholder="Defina um nome para o projeto"
 								value={name}
 								onChange={e => setName(e.target.value)}
 							/>
-							<input
-								type="text"
-								className={clsx(
-									"w-full text-xs py-3 rounded-md outline-none border-0 bg-gray2",
-									"focus-within:text-white text-gray1 px-4 placeholder-gray1",
-								)}
-								placeholder="Especifique o separador"
-								maxLength={1}
-								value={separator}
-								onChange={handleSeparator}
-							/>
+							<div className="flex gap-4 w-full">
+								<input
+									type="text"
+									className={clsx(
+										"w-1/2 text-xs py-3 rounded-md outline-none bg-gray2",
+										"focus-within:text-white  text-gray1 px-4 placeholder-gray1",
+										"border border-solid border-transparent focus-within:border-pink",
+									)}
+									placeholder="Especifique o separador"
+									maxLength={1}
+									value={separator}
+									onChange={handleSeparator}
+								/>
+								<Select
+									options={yesOrNot}
+									className="rounded-md w-1/2 bg-gray2 font-medium text-xs text-gray1"
+									placeholder="Possui cabeçalho?"
+									unstyled
+									styles={customStyles}
+									onChange={setHasHeader}
+								/>
+							</div>
 						</div>
 
 						<div className="text-white text-xs font-semibold flex flex-col gap-3 px-8 py-8">
@@ -212,3 +230,31 @@ export function UploadForm({ open, setOpen }: UploadFormProps) {
 		</Dialog.Root>
 	);
 }
+
+const customStyles = {
+	option: (defaultStyles: any, state: { isSelected: any }) => ({
+		backgroundColor: "rgb(63 67 73)",
+		color: state.isSelected ? "#FFF" : "rgb(128 128 129)",
+		fontSize: "0.75rem",
+		lineHeight: "1rem",
+		padding: 6,
+	}),
+	control: (defaultStyles: any) => ({
+		height: "100%",
+		display: "flex",
+		width: "100%",
+		padding: "0 15px",
+		backgroundColor: "rgb(63 67 73 / 0.5)",
+		borderRadius: "0.375rem",
+		border: "none",
+	}),
+	singleValue: (defaultStyles: any) => ({
+		...defaultStyles,
+		color: "rgb(128 128 129)",
+		backgroundColor: "transparent",
+		display: "flex",
+		alignItems: "center",
+		justifyItems: "center",
+		padding: 8,
+	}),
+};
