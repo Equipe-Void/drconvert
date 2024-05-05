@@ -2,13 +2,18 @@
 
 import { clsx } from "clsx";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Trash } from "@phosphor-icons/react";
 
+import { useUserStore } from "@/app/_store/user-store";
 import { useStageStore } from "@/app/_store/stage-store";
 import { remove_accents } from "@/app/_functions/remove-accents";
 import { useNonSavedFieldStore } from "@/app/_store/non-saved-field-store";
 import { fieldTypes, yesOrNot } from "@/app/_constants/field-select-values";
+import {
+	Classification,
+	findAllClassifications,
+} from "@/app/_services/users/classification";
 import { useNonSavedProjectStore } from "@/app/_store/non-saved-project.store";
 
 interface FieldCardProps {
@@ -21,6 +26,7 @@ interface FieldCardProps {
 	};
 	header?: string;
 	nonSaved: boolean;
+	classification?: Classification;
 	index: number;
 }
 
@@ -33,15 +39,21 @@ export default function FieldCard({
 	field,
 	nonSaved,
 	header,
+	classification,
 	index,
 }: FieldCardProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isEditing, setIsEditing] = useState(true);
 	const [type, setType] = useState<Option | null>({} as Option);
+	const [classifications, setClassifications] = useState<Option[]>();
 	const [name, setName] = useState(header || (field && field?.name));
 	const [isNullable, setIsNullable] = useState<Option | null>({} as Option);
 	const [isIdentifier, setIsIdentifier] = useState<Option | null>({} as Option);
+	const [fieldClassification, setFieldClassification] = useState<Option | null>(
+		{} as Option,
+	);
 
+	const user = useUserStore(state => state.user);
 	const stage = useStageStore(state => state.stage);
 	const addField = useNonSavedFieldStore(state => state.addField);
 	const removeHeader = useNonSavedProjectStore(state => state.removeHeaders);
@@ -60,7 +72,7 @@ export default function FieldCard({
 		if (name && type && isNullable && isIdentifier) {
 			addField({
 				name: name!,
-				type: type!.value,
+				type: type!.value.toString(),
 				isNullable: isNullable!.value === "true",
 				isIdentifier: isIdentifier.value === "true" || false,
 			});
@@ -77,15 +89,37 @@ export default function FieldCard({
 				type: type!.value || field!.type,
 				isNullable: isNullable!.value === "true" || field!.isNullable,
 				isIdentifier: isIdentifier!.value === "true" || field!.isIdentifier,
+				classificationId: fieldClassification?.value,
 			});
 		}
 	};
+
+	useEffect(() => {
+		const handleGetClassifications = async () => {
+			const classifications = await findAllClassifications({
+				userId: user.id,
+			});
+
+			let formattedClassifications = [] as Option[];
+
+			classifications.map(c => {
+				formattedClassifications.push({
+					value: c.id.toString(),
+					label: c.name,
+				});
+			});
+
+			setClassifications(formattedClassifications);
+		};
+
+		handleGetClassifications();
+	}, []);
 
 	return (
 		<div
 			className={`${index !== 0 && "border-t border-t-gray2"} py-5 flex justify-between items-center`}>
 			<div className="flex gap-x-20">
-				{!nonSaved && stage === "B" ? (
+				{(!nonSaved && stage === "B") || "S" ? (
 					<div className="flex items-center gap-x-20">
 						<p className="text-xs w-[7rem] text-gray1 font-black">{name}</p>
 						<p className="text-xs w-[6rem] text-gray1 font-black">
@@ -125,7 +159,7 @@ export default function FieldCard({
 							defaultValue={
 								(field && {
 									value: field!.isNullable.toString(),
-									label: field!.isNullable.toString(),
+									label: field!.isNullable ? "Sim" : "Não",
 								}) ||
 								isNullable
 							}
@@ -143,12 +177,39 @@ export default function FieldCard({
 						defaultValue={
 							(field && {
 								value: field!.isIdentifier.toString(),
-								label: field!.isIdentifier.toString(),
+								label: field!.isIdentifier ? "Sim" : "Não",
 							}) ||
 							isIdentifier
 						}
 						onChange={setIsIdentifier}
 						options={yesOrNot}
+						className="rounded-md h-6 w-[8rem] bg-gray2/50 font-medium text-xs text-gray1"
+						unstyled
+						styles={customStyles}
+					/>
+				) : null}
+
+				{!nonSaved && stage === "S" ? (
+					<div className="flex items-center gap-x-20">
+						<p className="text-xs w-[8rem] text-gray1 font-black">
+							{field?.isIdentifier ? "Sim" : "Não"}
+						</p>
+					</div>
+				) : null}
+
+				{!nonSaved && stage === "S" ? (
+					<Select
+						defaultValue={
+							field && classification
+								? {
+										value: classification!.id.toString(),
+										label: classification!.name,
+									}
+								: null
+						}
+						placeholder="Selecione"
+						onChange={setFieldClassification}
+						options={classifications}
 						className="rounded-md h-6 w-[8rem] bg-gray2/50 font-medium text-xs text-gray1"
 						unstyled
 						styles={customStyles}
@@ -194,6 +255,7 @@ const customStyles = {
 		backgroundColor: "rgb(63 67 73 / 0.5)",
 		borderRadius: "0.375rem",
 		border: "none",
+		paddingLeft: 6,
 	}),
 	singleValue: (defaultStyles: any) => ({
 		...defaultStyles,

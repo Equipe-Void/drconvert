@@ -1,12 +1,17 @@
 import Cookies from "js-cookie";
 
-import { User } from "@/app/_store/user-store";
 import { fetchWrapper } from "@/app/_functions/fetch-wrapper";
 
 export interface Classification {
-	id?: number;
+	id: number;
 	name: string;
-	user: User;
+	fromTo: [
+		{
+			id: number;
+			input: string;
+			output: string;
+		},
+	];
 }
 
 interface CreateClassificationRequest {
@@ -55,6 +60,41 @@ export async function createFromTo({
 			output: output,
 			classificationId: classificationId,
 		}),
+		headers: new Headers({
+			"content-type": "application/json",
+			Authorization: `Bearer ${Cookies.get("token")}`,
+		}),
+	});
+}
+
+interface FindAllClassificationsRequest {
+	userId: number;
+}
+
+export async function findAllClassifications({
+	userId,
+}: FindAllClassificationsRequest) {
+	return await fetchWrapper<Classification[]>(
+		`classifications/user/${userId}`,
+		{
+			method: "GET",
+			headers: new Headers({
+				"content-type": "application/json",
+				Authorization: `Bearer ${Cookies.get("token")}`,
+			}),
+		},
+	);
+}
+
+interface DeleteClassificationRequest {
+	classificationId: number;
+}
+
+export async function deleteClassification({
+	classificationId,
+}: DeleteClassificationRequest) {
+	return await fetchWrapper(`classifications/${classificationId}`, {
+		method: "DELETE",
 		headers: new Headers({
 			"content-type": "application/json",
 			Authorization: `Bearer ${Cookies.get("token")}`,

@@ -3,12 +3,14 @@ import { useState } from "react";
 import ReactLoading from "react-loading";
 
 import { AlertDialog } from "@/app/_components/alert";
+import { useReloadPageStore } from "@/app/_store/reload-page";
 import { createFromTo } from "@/app/_services/users/classification";
 import { useClassificationStageStore } from "@/app/_store/classification-stage-store";
 import { useActualClassificationStore } from "@/app/_store/actual-classification-store";
 import { useClassificationFormStateStore } from "@/app/_store/classification-form-store";
 
 export default function ClassificationFormStage2() {
+	const useReloadPage = useReloadPageStore();
 	const classificationStage = useClassificationStageStore();
 	const actualClassification = useActualClassificationStore();
 	const useClassificationFormState = useClassificationFormStateStore();
@@ -26,13 +28,7 @@ export default function ClassificationFormStage2() {
 			setAlertIsOpen(true);
 		}
 
-		console.log({
-			input: input,
-			output: output,
-			classificationId: actualClassification.classification.id!,
-		});
-
-		const fromto = await createFromTo({
+		await createFromTo({
 			input: input,
 			output: output,
 			classificationId: actualClassification.classification.id!,
@@ -42,6 +38,7 @@ export default function ClassificationFormStage2() {
 		actualClassification.removeClassification();
 		setIsLoading(false);
 		useClassificationFormState.removeOpen();
+		useReloadPage.addReloadPage(true);
 	};
 
 	return (

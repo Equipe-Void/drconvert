@@ -1,26 +1,58 @@
 "use client";
 
-import { Check, Trash } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { Trash } from "@phosphor-icons/react";
+
+import { deleteClassification } from "@/app/_services/users/classification";
+
+interface Classification {
+	id: number;
+	name: string;
+	fromTo: [
+		{
+			id: number;
+			input: string;
+			output: string;
+		},
+	];
+}
 
 interface ClassificationCardProps {
+	classification: Classification;
 	index: number;
 }
 
-export default function ClassificationCard({ index }: ClassificationCardProps) {
+export default function ClassificationCard({
+	classification,
+	index,
+}: ClassificationCardProps) {
+	const router = useRouter();
+
+	const handleDeleteClassification = async () => {
+		await deleteClassification({ classificationId: classification.id });
+		router.push("/classifications");
+	};
+
 	return (
 		<div
 			className={`${index !== 0 && "border-t border-t-gray2"} py-5 flex justify-between items-center`}>
 			<div className="flex gap-x-20">
 				<div className="flex items-center gap-x-20">
-					<p className="text-xs w-[9rem] text-gray1 font-black">Avaliação</p>
-					<p className="text-xs w-[8rem] text-gray1 font-black">5 tipos</p>
+					<p className="text-xs w-[9rem] text-gray1 font-black">
+						{classification.name}
+					</p>
+					<p className="text-xs w-[8rem] text-gray1 font-black">
+						{classification.fromTo.length}{" "}
+						{classification.fromTo.length === 1 ? "tipo" : "tipos"}
+					</p>
 					<p className="text-xs w-auto text-white font-black px-3 py-2 rounded-md bg-gray2/50">
-						entrada: "I" / saída: "ruim"
+						entrada: "{classification.fromTo[0].input}" / saída: "
+						{classification.fromTo[0].output}"
 					</p>
 				</div>
 			</div>
 			<Trash
-				// onClick={() => handleRemoveField()}
+				onClick={handleDeleteClassification}
 				className="h-[1.12rem] w-[1.12rem] text-gray2 hover:text-red duration-150"
 			/>
 		</div>

@@ -12,6 +12,17 @@ export interface Project {
 			type: string;
 			isIdentifier: boolean;
 			isNullable: boolean;
+			classification?: {
+				id: number;
+				name: string;
+				fromTo: [
+					{
+						id: number;
+						input: string;
+						output: string;
+					},
+				];
+			};
 		},
 	];
 	files: File[];

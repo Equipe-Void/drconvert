@@ -36,7 +36,7 @@ public class Field {
   private Boolean isNullable;
 
   @ManyToOne
-  @JoinColumn(name = "classification")
+  @JoinColumn(name = "classification_id")
   private Classification classification;
 
   @ManyToOne

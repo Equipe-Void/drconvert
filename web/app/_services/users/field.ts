@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 
 import { fetchWrapper } from "@/app/_functions/fetch-wrapper";
+import { Classification } from "./classification";
 
 export interface Field {
 	id?: number;
@@ -12,6 +13,7 @@ export interface Field {
 		id: number;
 		name: string;
 	};
+	classificationId?: string;
 }
 
 interface CreateFieldsRequest {
@@ -20,6 +22,7 @@ interface CreateFieldsRequest {
 
 interface UpdateFieldRequest {
 	field: Omit<Field, "project">;
+	classificationId?: number;
 }
 
 export async function createFields({ fields }: CreateFieldsRequest) {
@@ -43,6 +46,7 @@ export async function updateField({ field }: UpdateFieldRequest) {
 			type: field.type,
 			isIdentifier: field.isIdentifier,
 			isNullable: field.isNullable,
+			classificationId: field.classificationId,
 		}),
 		headers: new Headers({
 			"content-type": "application/json",

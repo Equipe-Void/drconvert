@@ -50,7 +50,6 @@ public class UpdateFieldController {
       if (classificationExists.isEmpty()) {
         throw new NotFoundException("Classificação Não Encontrada");
       }
-
     }
 
     try {
