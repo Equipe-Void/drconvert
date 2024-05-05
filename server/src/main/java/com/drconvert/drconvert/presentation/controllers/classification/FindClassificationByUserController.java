@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.drconvert.drconvert.data.usecases.classification.FindClassificationByUser;
 import com.drconvert.drconvert.domain.model.Classification;
 import com.drconvert.drconvert.domain.model.User;
-import com.drconvert.drconvert.domain.usecases.classification.FindAllClassificationUseCase;
 import com.drconvert.drconvert.domain.usecases.user.FindUserByIdUseCase;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.UserNotFoundException;
@@ -25,26 +25,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class FindClassificationByUserController {
 
   @Autowired
-  private FindAllClassificationUseCase findAllClassification;
+  private FindClassificationByUser findAllClassification;
 
   @Autowired
   private FindUserByIdUseCase findUserById;
 
-  @GetMapping("/classifications/userId/{id}")
-  public ResponseEntity<List<Classification>> findClassifications(@PathVariable("id") Long id) {
+  @GetMapping("/classifications/user/{userId}")
+  public ResponseEntity<List<Classification>> findClassifications(@PathVariable("userId") Long userId) {
 
-    Optional<User> userExists = findUserById.find(id);
+    Optional<User> userExists = findUserById.find(userId);
 
     if (!userExists.isPresent()) {
       throw new UserNotFoundException();
     }
 
     try {
-      List<Classification> classifications = findAllClassification.findAll();
+      List<Classification> classifications = findAllClassification.findClassifications(userExists.get());
 
       return ResponseEntity.ok(classifications);
     } catch (Exception e) {
-      throw new BadRequestException("Erro ao buscar Classificações");
+      throw new BadRequestException("Erro ao buscar Classificações deste usuário");
     }
   }
 
