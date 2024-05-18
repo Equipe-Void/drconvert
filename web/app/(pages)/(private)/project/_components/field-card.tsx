@@ -116,20 +116,20 @@ export default function FieldCard({
 	}, []);
 
 	return (
-		<div
-			className={`${index !== 0 && "border-t border-t-gray2"} py-5 flex justify-between items-center`}>
-			<div className="flex gap-x-20">
-				{(!nonSaved && stage === "B") || "S" ? (
-					<div className="flex items-center gap-x-20">
-						<p className="text-xs w-[7rem] text-gray1 font-black">{name}</p>
-						<p className="text-xs w-[6rem] text-gray1 font-black">
-							{field?.type}
-						</p>
-						<p className="text-xs w-[7rem] text-gray1 font-black">
-							{(field?.isNullable && "Sim") || "Não"}
-						</p>
-					</div>
-				) : null}
+        <div
+            className={`${index !== 0 && "border-t border-t-gray2"} py-5 flex justify-between items-center`}>
+            <div className="flex gap-x-20">
+                {(!nonSaved && (stage === "B" || stage === "S")) ? (
+                    <div className="flex items-center gap-x-20">
+                        <p className="text-xs w-[7rem] text-gray1 font-black">{name}</p>
+                        <p className="text-xs w-[6rem] text-gray1 font-black">
+                            {field?.type}
+                        </p>
+                        <p className="text-xs w-[7rem] text-gray1 font-black">
+                            {(field?.isNullable && "Sim") || "Não"}
+                        </p>
+                    </div>
+                ) : null}
 
 				{nonSaved || stage === "LZ" ? (
 					<div className="flex gap-x-20">

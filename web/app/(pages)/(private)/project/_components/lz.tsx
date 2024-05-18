@@ -46,7 +46,7 @@ export default function B() {
 	};
 
 	return (
-		<div className="p-8">
+		<div className="pt-8">
 			<AlertDialog
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
