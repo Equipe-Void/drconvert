@@ -6,11 +6,11 @@ export const userRoutes = [
 		path: "/my-projects",
 		icon: Folders,
 	},
-	// {
-	// 	name: "Classificações",
-	// 	path: "/classifications",
-	// 	icon: Files,
-	// },
+	{
+	 	name: "Classificações",
+	 	path: "/classifications",
+	 	icon: Files,
+	},
 	{
 		name: "Dashboard",
 		path: "/dashboard",

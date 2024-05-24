@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { ListMagnifyingGlass, Calendar } from "@phosphor-icons/react";
+import { ListMagnifyingGlass } from "@phosphor-icons/react";
 
 interface SearchingProps {
   projectName: string;
@@ -56,17 +54,6 @@ const Searching: React.FC<SearchingProps> = ({
         <option value="2">Usuário 2</option>
         <option value="3">Usuário 3</option>
       </select>
-      <div className="relative">
-      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
-        <Calendar />
-      </span>
-      <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        placeholderText="DATA"
-        className="h-12 bg-black1 border border-solid border-gray-600 text-gray-300 outline-none pl-10 pr-4 text-sm rounded z-0"
-      />
-    </div>
 
     </div>
   );
