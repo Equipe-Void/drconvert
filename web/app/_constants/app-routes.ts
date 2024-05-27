@@ -1,4 +1,4 @@
-import { Files, Folders, Gear } from "@phosphor-icons/react";
+import { Files, Folders, Gear, ChartPie } from "@phosphor-icons/react";
 
 export const userRoutes = [
 	{
@@ -7,12 +7,17 @@ export const userRoutes = [
 		icon: Folders,
 	},
 	{
-		name: "Classificações",
-		path: "/classifications",
-		icon: Files,
+	 	name: "Classificações",
+	 	path: "/classifications",
+	 	icon: Files,
 	},
 	{
-		name: "Configurações",
+		name: "Dashboard",
+		path: "/dashboard",
+		icon: ChartPie,
+	},
+	{
+		name: "Settings",
 		path: "/settings",
 		icon: Gear,
 	},
@@ -26,6 +31,9 @@ export const APP_ROUTES = {
 			},
 			settings: {
 				name: "/settings",
+			},
+			dashboard: {
+				name: "/dashboard",
 			},
 			project: {
 				name: "/project",

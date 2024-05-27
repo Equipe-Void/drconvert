@@ -24,7 +24,7 @@ public class UpdateField implements UpdateFieldUseCase {
     oldField.setIsIdentifier(data.isIdentifier());
     oldField.setIsNullable(data.isNullable());
 
-    if (classification.isPresent()) {
+    if (classification != null) {
       oldField.setClassification(classification.get());
     }
 

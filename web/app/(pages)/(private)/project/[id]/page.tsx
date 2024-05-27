@@ -11,8 +11,8 @@ export default function Project() {
 
 	return (
 		<div className="p-8">
-			{stage === "LZ" ? <Lz /> : stage === "B" ? <B /> : <S />}
 			<PageControl />
+			{stage === "LZ" ? <Lz /> : stage === "B" ? <B /> : <S />}
 		</div>
 	);
 }
