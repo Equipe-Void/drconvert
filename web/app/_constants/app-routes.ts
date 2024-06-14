@@ -12,11 +12,6 @@ export const userRoutes = [
 		icon: ChartPie,
 	},
 	{
-		name: "Settings",
-		path: "/settings",
-		icon: Gear,
-	},
-	{
 		name: "Manual de Usuário",
 		path: "/manual",
 		icon: BookOpenText,

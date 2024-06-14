@@ -48,6 +48,9 @@ const UserManual: React.FC = () => {
 							<a href="#classificacao" className="mt-2">
 								<h2 className="text-l font-semibold text-gray1 ml-4 hover:text-white ease-out duration-300">Classificação</h2>
 							</a>
+							<a href="#silver" className="mt-2">
+								<h2 className="text-l font-semibold text-gray1 ml-4 hover:text-white ease-out duration-300">Silver</h2>
+							</a>
 						</>
 					)}
 				</div>
@@ -73,13 +76,18 @@ const UserManual: React.FC = () => {
 				</div>
 				<div id="bronze" className="mt-4 ml-4">
 					<h2 className="text-xl font-semibold">Bronze</h2>
-					<p className="mt-2 text-gray-300">Nesta etapa você poderá identificar se este campo é um identificador ou não. Após realizar essa etpa você também precisará clicar no check (✔) no final de cada linha e clicar em salvar.</p>
+					<p className="mt-2 text-gray-300">Nesta etapa você poderá identificar se este campo é um identificador ou não. Após realizar esta etpa você também precisará clicar no check (✔) no final de cada linha e clicar em salvar.</p>
 					<img src="/images/Bronze.gif" alt="Bronze" className="mt-4 border-solid border-2 border-black1 rounded-md" />
 				</div>
 				<div id="classificacao" className="mt-4 ml-4">
 					<h2 className="text-xl font-semibold">Classificação</h2>
 					<p className="mt-2 text-gray-300">Antes da etapa Silver é necessário ter ao menos uma classificação criada, para criar ao entrar na etapa silver aparecerá um botão de classificações clicando nele aparecerá todas as suas classficações criadas podendo alterar ou excluir, e adicionar mais uma ao clicar em "Adicionar Classificação", ao clicar de um nome a essa classificação e clique em criar, após isso você define o valor de entrada e de saída dela.</p>
 					<img src="/images/classificacao.gif" alt="Classificacao" className="mt-4 border-solid border-2 border-black1 rounded-md" />
+				</div>
+				<div id="silver" className="mt-4 ml-4">
+					<h2 className="text-xl font-semibold">Silver</h2>
+					<p className="mt-2 text-gray-300">Nesta última etapa você poderá definir a classificação deste campo. Após realizar esta etpa você também precisará clicar no check (✔) no final de cada linha e clicar em salvar.</p>
+					<img src="/images/Silver.gif" alt="Bronze" className="mt-4 border-solid border-2 border-black1 rounded-md" />
 				</div>
 			</div>
 		</div>
