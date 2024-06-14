@@ -1,15 +1,10 @@
-import { Files, Folders, Gear, ChartPie } from "@phosphor-icons/react";
+import { Files, Folders, Gear, ChartPie, BookOpenText } from "@phosphor-icons/react";
 
 export const userRoutes = [
 	{
 		name: "Meus Projetos",
 		path: "/my-projects",
 		icon: Folders,
-	},
-	{
-	 	name: "Classificações",
-	 	path: "/classifications",
-	 	icon: Files,
 	},
 	{
 		name: "Dashboard",
@@ -20,6 +15,11 @@ export const userRoutes = [
 		name: "Settings",
 		path: "/settings",
 		icon: Gear,
+	},
+	{
+		name: "Manual de Usuário",
+		path: "/manual",
+		icon: BookOpenText,
 	},
 ];
 
@@ -40,6 +40,9 @@ export const APP_ROUTES = {
 			},
 			classifications: {
 				name: "/classifications",
+			},
+			manual: {
+				name: "/manual",
 			},
 		},
 	},

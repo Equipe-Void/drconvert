@@ -28,15 +28,17 @@ export default function Header() {
 								? "Classificações"
 								: pathname === "/dashboard"
 									? "Dashboard"
-									: title}
+									: pathname === "/manual"
+										? "Manual de Usuário"
+										: title}
 				</h1>
 				{(pathname.includes("/project/") ||
 					pathname.includes("/non-saved/")) && (
-					<ArrowRight
-						onClick={() => router.push("/my-projects")}
-						className="h-[1.5rem] w-[1.5rem] text-gray1 hover:text-pink duration-150 cursor-pointer"
-					/>
-				)}
+						<ArrowRight
+							onClick={() => router.push("/my-projects")}
+							className="h-[1.5rem] w-[1.5rem] text-gray1 hover:text-pink duration-150 cursor-pointer"
+						/>
+					)}
 			</div>
 		</div>
 	);
