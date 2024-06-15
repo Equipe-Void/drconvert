@@ -3,21 +3,17 @@ package com.drconvert.drconvert.presentation.controllers.file;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.drconvert.drconvert.domain.model.Project;
 import com.drconvert.drconvert.domain.usecases.file.MapsHeaderUseCase;
 import com.drconvert.drconvert.domain.usecases.file.UploadFileUseCase;
 import com.drconvert.drconvert.domain.usecases.project.FindProjectByIdUseCase;
 import com.drconvert.drconvert.presentation.errors.BadRequestException;
 import com.drconvert.drconvert.presentation.errors.ProjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin("*")
 @RestController
