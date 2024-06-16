@@ -2,6 +2,7 @@ package com.drconvert.drconvert.presentation.controllers.project;
 
 import java.util.Optional;
 
+import com.drconvert.drconvert.domain.usecases.file.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,9 @@ public class UpdateProjectController {
   @Autowired
   private FindProjectByIdUseCase findProjectById;
 
+  @Autowired
+  private LogService logService;
+
   @PutMapping("/projects/{id}")
   public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody @Validated UpdateProjectRequestDTO data) {
     Optional<Project> projectExists = this.findProjectById.find(Long.valueOf(id));
@@ -41,6 +45,7 @@ public class UpdateProjectController {
 
     try {
       Project project = updateProject.update(Long.valueOf(id), data.name(), data.totalFields());
+      logService.logAction(null, "upload_project_file", project);
 
       return ResponseEntity.ok().body(project);
     } catch (Exception e) {
